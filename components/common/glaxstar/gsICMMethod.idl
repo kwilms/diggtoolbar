@@ -1,0 +1,45 @@
+/**
+ * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+/**
+ * Represents a method in an API specification.
+ */
+[scriptable, uuid(DCD5C77E-8AE3-4028-BDEA-88F7B2CC5E0F)]
+interface gsICMMethod : nsISupports
+{
+  /**
+   * The rememberable name of the method.
+   */
+  readonly attribute AUTF8String mnemonic;
+
+  /**
+   * The URL entry point that identifies this particular method.
+   */
+  readonly attribute AUTF8String entryPoint;
+
+  /**
+   * The protocol used to invoke this method.
+   */
+  readonly attribute AUTF8String protocol;
+
+  /**
+   * The method (GET or POST) used to send data.
+   */
+  readonly attribute AUTF8String method;
+
+  /**
+   * Initializes the method object.
+   * @param aMnemonic the mnemonic associated to the method.
+   * @param aEntryPoint the URL entry point to set on the method.
+   * @param aProtocol the protocol to set on the method.
+   * @param aMethod the method (GET or POST) used to send data. A null value
+   * defaults to GET.
+   * @throws Exception if any of the parameters is invalid.
+   */
+  void initialize(
+    in AUTF8String aMnemonic, in AUTF8String aEntryPoint,
+    in AUTF8String aProtocol, in AUTF8String aMethod);
+};

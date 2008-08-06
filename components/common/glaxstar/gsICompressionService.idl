@@ -1,0 +1,23 @@
+/**
+ * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+/**
+ * Compression service. It handles uncompression of strings.
+ */
+[scriptable, uuid(C5A9346F-CB1F-455D-AE3A-1A25BA651616)]
+interface gsICompressionService : nsISupports
+{
+  /**
+   * Uncompresses a string of data using the ZIP algorithm.
+   * @param aData the data to uncompress. It must be an UTF-8 encoded
+   * representation of a ZIP file, holding a single file entry. The name of the
+   * entry must not begin with '_' or '.'.
+   * @return uncompressed data.
+   * @throws Exception if the data string is null, or the data format is
+   * invalid.
+   */
+  AUTF8String uncompressZIP(in AUTF8String aData);
+};

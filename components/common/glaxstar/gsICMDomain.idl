@@ -1,0 +1,24 @@
+/**
+ * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+/**
+ * Represents a domain in an API specification.
+ */
+[scriptable, uuid(384EF24D-3F5C-4448-BA6D-02B5140C8EAA)]
+interface gsICMDomain : nsISupports
+{
+  /**
+   * The hostname in the domain.
+   */
+  readonly attribute AUTF8String hostname;
+
+  /**
+   * Initializes the domain object.
+   * @param aHostname the hostname to set on the domain.
+   * @throws Exception is the hostname is invalid.
+   */
+  void initialize(in AUTF8String aHostname);
+};

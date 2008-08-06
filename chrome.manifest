@@ -1,0 +1,40 @@
+##### BEGIN LICENSE BLOCK ######
+#
+# The contents of this file are subject to the Mozilla Public License
+# Version 1.1 (the "License"); you may not use this file except in
+# compliance with the License. You may obtain a copy of the License at
+# http://www.mozilla.org/MPL/
+#
+# Software distributed under the License is distributed on an "AS IS"
+# basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+# License for the specific language governing rights and limitations
+# under the License.
+#
+# The Original Code is GLaxstar Ltd code.
+#
+# The Initial Developer of the Original Code is Glaxstar Ltd.
+# Portions created by the Initial Developer are
+# Copyright (C) 2008 Digg Inc. All Rights Reserved.
+#
+# Contributor(s):
+#   Jose Enrique Bolanos <jose@glaxstar.com>
+#   Andres Hernandez <andres@glaxstar.com>
+#   Erik van Eykelen <erik@glaxstar.com>
+#
+##### END LICENSE BLOCK #####
+
+overlay chrome://browser/content/browser.xul  chrome://digg/content/common/gsDiggMain.xul
+overlay chrome://browser/content/browser.xul  chrome://digg/content/events/gsDiggEventViewer.xul
+overlay chrome://browser/content/browser.xul  chrome://digg/content/toolbar/gsDiggToolbar.xul
+
+overlay chrome://digg/content/setup/gsDiggSetupWindow.xul       chrome://digg/content/settings/gsDiggNotificationsPane.xul
+overlay chrome://digg/content/settings/gsDiggSettingsWindow.xul chrome://digg/content/settings/gsDiggNotificationsPane.xul
+
+content digg jar:chrome/digg.jar!/content/
+
+skin digg classic/1.0 jar:chrome/digg.jar!/skin/winxp/
+skin digg classic/1.0 jar:chrome/digg.jar!/skin/mac/    os=Darwin
+
+locale digg en-US jar:chrome/digg.jar!/locale/en-US/
+
+style chrome://global/content/customizeToolbar.xul chrome://digg/skin/toolbar/gsDiggToolbar.css

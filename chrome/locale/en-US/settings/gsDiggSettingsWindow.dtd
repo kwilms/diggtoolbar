@@ -1,0 +1,50 @@
+<!--
+***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****
+-->
+
+<!ENTITY gs.digg.settings.window.title  "Digg Notifications Settings">
+
+<!ENTITY gs.digg.settings.recentlyPopular.label   "Receive notifications about recently popular stories">
+
+<!ENTITY gs.digg.settings.friendsActivity.label   "Receive notifications about your friends' activity">
+<!ENTITY gs.digg.settings.username.textbox.label  "Digg user name">
+<!ENTITY gs.digg.settings.username.comment.label  "(leave blank for none)">
+
+<!ENTITY gs.digg.settings.autohide.label        "Auto-hide notifications">
+<!ENTITY gs.digg.settings.autohide.type1.label  "Never show">
+<!ENTITY gs.digg.settings.autohide.type2.label  "Hide after 5 seconds">
+<!ENTITY gs.digg.settings.autohide.type3.label  "Hide after 10 seconds">
+<!ENTITY gs.digg.settings.autohide.type4.label  "Keep open">
+
+<!ENTITY gs.digg.settings.openLinks.label        "Open Links">
+<!ENTITY gs.digg.settings.openLinks.type1.label  "In the current tab">
+<!ENTITY gs.digg.settings.openLinks.type2.label  "In a new tab">
+<!ENTITY gs.digg.settings.openLinks.type3.label  "In a new window">
+
+<!ENTITY gs.digg.settings.notificationType.label        "Notification Style">
+<!ENTITY gs.digg.settings.notificationType.type1.label  "Bottom bar">
+<!ENTITY gs.digg.settings.notificationType.type2.label  "Inner popup">
+<!ENTITY gs.digg.settings.notificationType.type3.label  "Outer popup">

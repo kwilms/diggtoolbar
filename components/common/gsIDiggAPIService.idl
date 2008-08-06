@@ -1,0 +1,47 @@
+/***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****/
+
+#include "nsISupports.idl"
+interface gsICMError;
+interface gsICMTransferObject;
+interface gsIDiggAPI;
+
+/**
+ * API service. Initializes and holds the only instance of the Digg API object.
+ */
+[scriptable, uuid(5a0fa570-f6c4-11dc-95ff-0800200c9a66)]
+interface gsIDiggAPIService : nsISupports
+{
+
+  /* The observer topic used to notify if the API service connected properly. */
+  readonly attribute AUTF8String OBSERVER_TOPIC_API_CONNECTED;
+  /* The Digg API object. */
+  readonly attribute gsIDiggAPI api;
+
+  /**
+   * Initializes the API with the server manifest.
+   */
+  void initialize();
+};

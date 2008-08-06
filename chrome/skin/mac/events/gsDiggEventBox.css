@@ -1,0 +1,311 @@
+/***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****/
+
+.outerBox {
+  background-color: #FFF;
+  height: 140px;
+  -moz-box-align: start;
+  font-family: arial, serif, sans-serif;
+  padding: 10px;
+}
+
+.arrowBox {
+  -moz-box-pack: start;
+  -moz-box-align: center;
+  height: inherit;
+  padding: 4px;
+}
+
+.leftArrow {
+  list-style-image: url("chrome://digg/skin/events/nav-left.png");
+}
+.leftArrow:hover {
+  list-style-image: url("chrome://digg/skin/events/nav-left-hover.png");
+}
+.leftArrow[disabled=true] {
+  list-style-image: url("chrome://digg/skin/events/nav-left-off.png");
+}
+
+.rightArrow {
+  list-style-image: url("chrome://digg/skin/events/nav-right.png");
+}
+.rightArrow:hover {
+  list-style-image: url("chrome://digg/skin/events/nav-right-hover.png");
+}
+.rightArrow[disabled=true] {
+  list-style-image: url("chrome://digg/skin/events/nav-right-off.png");
+}
+
+.divider {
+  width: 1px;
+  background-color: #CCC;
+  min-height: 100px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.smallDivider {
+  width: 1px;
+  height: 1.5em;
+  background-color: #CCC;
+}
+
+.closeButton {
+  list-style-image: url("chrome://digg/skin/events/close.png");
+  width: 16px;
+  height: 16px;
+  margin-top: 4px;
+  margin-bottom: 26px;
+}
+.closeButton:hover {
+  list-style-image: url("chrome://digg/skin/events/close-hover.png");
+}
+
+.mainBox {
+}
+
+.topBox {
+  min-height: 90px;
+  padding-top: 4px;
+  -moz-box-align: start;
+}
+
+.imageBox {
+  -moz-box-pack: center;
+  -moz-box-align: start;
+  width: 86px;
+}
+
+.imageBorder {
+  width: 82px;
+  height: 82px;
+  -moz-box-align: center;
+  -moz-box-pack: center;
+  border: 1px solid rgb(87,140,202);
+}
+
+.image {
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  min-height: 80px;
+  border: 1px solid #FFFFFF;
+}
+.image[media="images"] {
+  list-style-image: url("chrome://digg/skin/events/image-frame.png");
+}
+.image[media="videos"] {
+  list-style-image: url("chrome://digg/skin/events/video-frame.png");
+}
+
+.alertBox {
+  -moz-box-pack: start;
+  -moz-box-align: center;
+  padding-top: 4px;
+  width: 35px;
+}
+
+.alertBox > image {
+  list-style-image: url("chrome://digg/skin/events/alert.png");
+  width: 31px;
+  height: 31px;
+}
+
+.diggsBox {
+  -moz-box-pack: start;
+  -moz-box-align: center;
+  width: 60px;
+}
+
+.diggsNumberBox {
+  -moz-box-pack: start;
+  -moz-box-align: center;
+  background: url("chrome://digg/skin/events/diggsBox.gif") no-repeat center;
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  min-height: 52px;
+  color: rgb(147, 136, 63);
+  cursor: pointer;
+  padding-top: 8px;
+  padding-bottom: 4px;
+}
+
+.diggsNumberBox *:hover {
+  cursor: pointer !important;
+}
+
+.diggsNumberBox > description {
+  margin: 0px !important;
+}
+
+.diggsNumberBox:hover .diggsNumber {
+  color: rgb(147, 136, 63);
+}
+
+.diggsNumber {
+  font-size: 160%;
+  font-weight: normal;
+  letter-spacing: -1px;
+  line-height: 1;
+  color: rgb(115, 105, 38);
+}
+
+.diggItBox {
+  -moz-box-pack: center;
+  -moz-box-align: center;
+  background: url("chrome://digg/skin/events/diggItBox.png") no-repeat center;
+  width: 52px;
+  height: 28px;
+  min-width: 52px;
+  min-height: 28px;
+  color: rgb(16,92,182);
+  font-weight: bold;
+  margin-bottom: -5px;
+}
+
+.diggItBox:hover {
+  background: url("chrome://digg/skin/events/diggItBox-hover.png") no-repeat center;
+}
+
+.contentBox {
+  padding-left: 4px;
+  padding-right: 4px;
+  min-height: 90px;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 3px;
+  margin-bottom: 4px;
+  color: rgb(16,92,182);
+  text-decoration: underline;
+}
+
+.descriptionBox {
+  max-width: inherit;
+  max-height: inherit;
+  margin-bottom: 4px;
+}
+
+.description {
+  max-width: inherit;
+  max-height: inherit;
+  color: #444;
+  font-size: 11px;
+}
+
+.domain {
+  /*color: rgb(102,102,102);*/
+}
+
+.topic {
+  color: rgb(16,92,182);
+}
+
+.user {
+  color: rgb(16,92,182);
+}
+
+.quote {
+  background: url("chrome://digg/skin/events/quote.gif") no-repeat left;
+  width: 17px;
+  height: 14px;
+  padding-right: 4px;
+  display: table-cell;
+}
+
+.commentsImage {
+  list-style-image: url("chrome://digg/skin/events/event-comment.png");
+}
+.commentsLabel {
+  margin-left: 4px;
+  color: rgb(87,140,202);
+}
+
+.bottomBox {
+  min-height: 24px;
+  padding-left: 6px;
+  padding-right: 4px;
+  -moz-box-align: center;
+  font-weight: bold;
+}
+
+.eventImage {
+  height: 16px;
+  width: 16px;
+}
+.eventImage[eventType="1"] {
+  list-style-image: url("chrome://digg/skin/events/event-popular.png");
+}
+.eventImage[eventType="2"] {
+  list-style-image: url("chrome://digg/skin/events/event-submit.png");
+}
+.eventImage[eventType="3"] {
+  list-style-image: url("chrome://digg/skin/events/event-comment.png");
+}
+.eventImage[eventType="4"] {
+  list-style-image: url("chrome://digg/skin/events/event-digg.png");
+}
+
+.eventLabel {
+  margin-left: 4px;
+}
+.eventLabel[eventType="1"] {
+  color: #990000;
+  font-weight: bold;
+}
+.eventLabel[eventType="2"] {
+  font-weight: bold;
+}
+.eventLabel[eventType="3"] {
+}
+.eventLabel[eventType="4"] {
+}
+
+.settingsLabel {
+  color: rgb(16,92,182);
+}
+
+.snoozeLabel {
+  color: rgb(16,92,182);
+}
+.snoozeLabel[checked="true"] {
+  color: #FF0000;
+}
+.snoozeLabel[checked="true"]:hover {
+  color: #990000;
+  cursor: pointer !important;
+}
+
+.link:hover,
+.link *:hover{
+  cursor: pointer !important;
+  color: #000000;
+}

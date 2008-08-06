@@ -1,0 +1,36 @@
+<!--
+***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****
+-->
+
+<!ENTITY gs.digg.setup.title                  "Digg Toolbar Setup Wizard">
+
+<!ENTITY gs.digg.wizard.page1.title         "Customize Notifications: Friends’ Activity">
+<!ENTITY gs.digg.wizard.page1.description   "Enter your Digg username below to get notifications when your friends Digg, submit, and comment on stories.">
+<!ENTITY gs.digg.wizard.page2.title         "Customize Notifications: Popular Stories">
+<!ENTITY gs.digg.wizard.page2.description   "To receive notifications of the latest popular stories, choose the story types and topics from the list below.">
+
+<!ENTITY gs.digg.wizard.enter.user.label      "I have a Digg account:">
+<!ENTITY gs.digg.wizard.continue.user.label   "I don't have an account, I'll create one later">

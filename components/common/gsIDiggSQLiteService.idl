@@ -1,0 +1,75 @@
+/***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****/
+
+#include "nsISupports.idl"
+
+interface nsIArray;
+interface mozIStorageStatement;
+
+/**
+ * SQLite service
+ * Manages sqlite operations
+ */
+[scriptable, uuid(80e16390-fb5c-11dc-95ff-0800200c9a66)]
+interface gsIDiggSQLiteService : nsISupports
+{
+  /* Whether the database existed when the service was initialized */
+  readonly attribute boolean databaseExisted;
+
+  /**
+   * Creates a query statement based on the given string.
+   * @param aQueryString The query string.
+   * @return The query statement.
+   */
+  mozIStorageStatement createStatement(in AUTF8String aQueryString);
+
+  /**
+   * Executes a non query statement.
+   * @param aQueryStatement The query statement to be executed.
+   * @return The last inserted row id.
+   */
+  PRUint32 executeNonQuery(in mozIStorageStatement aQueryStatement);
+
+  /**
+   * Executes a query statement.
+   * @param aQueryStatement The query statement to be executed.
+   * @return The resulting set from the query.
+   */
+  nsIArray executeQuery(in mozIStorageStatement aQueryStatement);
+
+  /**
+   * Checks if a column exists in the specified table.
+   * @param aTable The table where to look for the column.
+   * @param aColumn The column to look for in the table.
+   * @return True if exists, false otherwise.
+   */
+  boolean existsColumnInTable(in AUTF8String aTable, in AUTF8String aColumn);
+
+  /**
+   * Closes the database connection. Note that this won't work as expected in
+   * versions before Firefox 3.
+   */
+  void closeConnection();
+};

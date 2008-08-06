@@ -1,0 +1,303 @@
+/***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****/
+
+#include "gsICommonAPI.idl"
+
+interface gsICMTransferObject;
+interface gsICMErrorHandler;
+interface gsICMLoadHandler;
+
+/**
+ * Represents the Digg server API. Every method in this object corresponds
+ * one to one to server calls.
+ */
+[scriptable, uuid(736712b0-f6c4-11dc-95ff-0800200c9a66)]
+interface gsIDiggAPI : gsICommonAPI
+{
+
+  // Containers
+
+  void listContainers(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void getContainer(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  // Errors
+
+  void listErrors(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void getError(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  // Gallery Photos
+
+  void listGalleryPhotos(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listGalleryPhotosComments(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void getGalleryPhoto(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listGalleryPhotoComments(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void getGalleryPhotoComment(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listGalleryPhotoCommentReplies(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  // Media
+
+  void listMedia(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void getMedium(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  // Stories
+
+  void listStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listStoriesComments(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listStoriesDiggs(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listStoriesByContainer(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listStoriesByTopic(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listHotStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listHotStoriesByContainer(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listHotStoriesByTopic(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listTopStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listTopStoriesByContainer(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listTopStoriesByTopic(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listPopularStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listPopularStoriesComments(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listPopularStoriesDiggs(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listPopularStoriesByContainer(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listPopularStoriesByTopic(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUpcomingStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUpcomingStoriesComments(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUpcomingStoriesDiggs(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUpcomingStoriesByContainer(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUpcomingStoriesByTopic(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void getStory(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listStoryComments(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listStoryDiggs(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void getStoryComment(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listStoryCommentReplies(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void getStoryUserDigg(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  // Topics
+
+  void listTopics(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  // User and User Activity
+
+  void listUsers(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUsersComments(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUsersDiggs(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void getUser(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUserComments(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUserDiggs(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUserCommentedStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUserDuggStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUserPopularStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUserSubmittedStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUserUpcomingStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  // User Fans and Friends
+
+  void listUserFans(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void getUserFan(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void getUserFriend(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUserFriends(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUserFriendsCommentedStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUserFriendsDuggStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUserFriendsPopularStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUserFriendsSubmittedStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void listUserFriendsUpcomingStories(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void getThrottle(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  void getAdminMessages(
+    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+};

@@ -1,0 +1,30 @@
+/**
+ * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+/**
+ * Represents a fixed parameter in an API specification.
+ */
+[scriptable, uuid(4599f5c0-f7a3-11dc-95ff-0800200c9a66)]
+interface gsICMFixedParameter : nsISupports
+{
+  /**
+   * The name of the fixed parameter.
+   */
+  readonly attribute AUTF8String name;
+
+  /**
+   * The value of the fixed parameter.
+   */
+  readonly attribute AUTF8String value;
+
+  /**
+   * Initializes the fixed parameter object.
+   * @param aName The name of the fixed parameter.
+   * @param aValue The value of the fixed parameter.
+   * @throws Exception if the name or value are invalid.
+   */
+  void initialize(in AUTF8String aName, in AUTF8String aValue);
+};

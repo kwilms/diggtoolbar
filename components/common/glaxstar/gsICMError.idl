@@ -1,0 +1,38 @@
+/**
+ * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+/**
+ * Represents an error from the API.
+ */
+[scriptable, uuid(056A0E4D-6D6E-4A9D-80A2-86E4E82919C1)]
+interface gsICMError : nsISupports
+{
+  /**
+   * The identifier of the type of error that occurred.
+   */
+  readonly attribute AUTF8String errorCode;
+
+  /**
+   * The message associated to the error.
+   */
+  readonly attribute AUTF8String errorMessage;
+
+  /**
+   * The name of the parameter that caused the error.
+   */
+  readonly attribute AUTF8String forParameter;
+
+  /**
+   * Initializes the error object.
+   * @param aErrorCode the identifier of the type of error that occurred.
+   * @param aErrorMessage the message associated to the error.
+   * @param aForParameter the name of the parameter that caused the error.
+   * @throws Exception if any of the parameters is invalid.
+   */
+  void initialize(
+    in AUTF8String aErrorCode, in AUTF8String aErrorMessage,
+    in AUTF8String aForParameter);
+};

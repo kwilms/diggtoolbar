@@ -1,0 +1,59 @@
+/***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****/
+
+#include "nsISupports.idl"
+interface gsIDiggLoadHandler;
+interface gsIDiggEvent;
+
+/**
+ * Event Manager. Fetches events (stories, friend activity) and provides methods
+ * to retrieve them.
+ */
+[scriptable, uuid(D198DE73-FF40-4853-8CF9-A2F61335BF61)]
+interface gsIDiggEventManager : nsISupports
+{
+  /* Observer topic used to notify when the event count changes */
+  readonly attribute AUTF8String OBSERVER_TOPIC_EVENT_COUNT_CHANGED;
+
+  /**
+   * Fetches new events (stories, friend activity). The result is passed in the
+   * load handler ("true" if new events were found, "false" otherwise).
+   * @param aLoadHandler The caller's load handler.
+   */
+  void fetchNewEvents(in gsIDiggLoadHandler aLoadHandler);
+
+  /**
+   * Gets the event at the given index.
+   * @param aIndex The index of the event to get. If null, zero is assumed.
+   * @return An event object. Null if there isn't any.
+   */
+  gsIDiggEvent getEventAtIndex(in short aIndex);
+
+  /**
+   * Obtains the current number of available events.
+   * @return The number of events.
+   */
+  unsigned short getEventCount();
+};

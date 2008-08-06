@@ -1,0 +1,93 @@
+/***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****/
+
+.gs-digg-tree-box {
+  height: 176px;
+  border: 1px solid #999999;
+  background-color: #FFFFFF;
+  overflow: auto;
+  -moz-box-orient: vertical;
+  padding: 2px;
+}
+
+.gs-digg-tree-throbber-box {
+  -moz-box-align: center;
+  -moz-box-pack: center;
+  background-color: transparent;
+}
+
+.gs-digg-tree-throbber{
+  list-style-image: url("chrome://digg/skin/common/tree/throbber-default.gif");
+}
+
+/* Container CSS */
+.gs-digg-tree-container-row {
+  background-color: #FFFFFF;
+  color: #000000;
+  height: 1.8em;
+}
+.gs-digg-tree-container-row[gsdiggselected=true] {
+  background-color: Highlight;
+  color: HighlightText;
+}
+
+.gs-digg-tree-container-twisty-box {
+  width: 12px !important;
+  -moz-box-align: center;
+  -moz-box-pack: center;
+}
+
+.gs-digg-tree-container-twisty {
+  width: 9px !important;
+  height: 9px !important;
+  list-style-image: url("chrome://global/skin/tree/twisty-clsd.png");
+}
+.gs-digg-tree-container-twisty[open=true] {
+  list-style-image: url("chrome://global/skin/tree/twisty-open.png");
+}
+.gs-digg-tree-container-twisty[gsdiggplatform="mac"] {
+  -moz-appearance: treetwisty;
+  width: 9px !important;
+  height: 9px !important;
+  list-style-image: url("chrome://global/skin/tree/twisty-clsd.gif");
+}
+.gs-digg-tree-container-twisty[gsdiggplatform="mac"][open=true] {
+  -moz-appearance: treetwistyopen;
+  list-style-image: url("chrome://global/skin/tree/twisty-open.gif");
+}
+
+/* Topic CSS */
+.gs-digg-tree-topic-space {
+  width: 3.6em;
+}
+.gs-digg-tree-topic-box {
+  height: 1.8em;
+  color: #000000;
+  background-color: #FFFFFF;
+}
+.gs-digg-tree-topic-box[gsdiggselected=true] {
+  background-color: Highlight;
+  color: HighlightText;
+}

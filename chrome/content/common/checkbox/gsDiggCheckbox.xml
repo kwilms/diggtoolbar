@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+
+<!--
+***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****
+-->
+
+<bindings xmlns="http://www.mozilla.org/xbl"
+  xmlns:xbl="http://www.mozilla.org/xbl"
+  xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <!-- Checkbox -->
+  <binding id="gs-digg-checkbox">
+    <resources>
+      <stylesheet src="chrome://digg/skin/common/checkbox/gsDiggCheckbox.css"/>
+    </resources>
+
+    <content>
+      <xul:hbox class="checkbox-icon-box">
+        <xul:image class="checkbox-check" anonid="gs-digg-checkbox-check"
+          xbl:inherits="checked,disabled,childselected"/>
+      </xul:hbox>
+      <xul:hbox class="checkbox-label-box" flex="1">
+        <xul:image class="checkbox-icon" xbl:inherits="src"/>
+        <xul:label class="checkbox-label" flex="1"
+          xbl:inherits="xbl:text=label,accesskey,crop"/>
+      </xul:hbox>
+    </content>
+
+    <handlers>
+      <handler event="click" phase="capturing" button="0"
+        action="_toogleChecked(event);"/>
+      <handler event="keypress" keycode=" "
+        action="_handleKeyPress(event);"/>
+    </handlers>
+
+    <implementation>
+
+      <!-- Checked property. -->
+      <property name="checked" >
+        <setter>
+          <![CDATA[
+            if (val) {
+              this.setAttribute("checked", "true");
+            } else {
+              this.removeAttribute("checked");
+            }
+          ]]>
+        </setter>
+        <getter>
+          <![CDATA[
+            return this.getAttribute("checked");
+          ]]>
+        </getter>
+      </property>
+
+      <!-- Label property. -->
+      <property name="label" >
+        <setter>
+          <![CDATA[
+            this.setAttribute("label", val);
+          ]]>
+        </setter>
+        <getter>
+          <![CDATA[
+            return this.getAttribute("label");
+          ]]>
+        </getter>
+      </property>
+
+      <!-- Constructor -->
+      <constructor>
+        <![CDATA[
+          // XXX: platform specific code
+          var utilityService =
+            Components.classes["@glaxstar.org/common/utility-service;1"].
+              getService(Components.interfaces.gsIUtilityService);
+          var platform = utilityService.getOperatingSystemName();
+
+          document.getAnonymousElementByAttribute(
+            this, "anonid", "gs-digg-checkbox-check").
+              setAttribute("gsdiggplatform", platform);
+        ]]>
+      </constructor>
+
+      <!--
+        - Toogles the checked value.
+        -->
+      <method name="_toogleChecked">
+        <parameter name="aEvent"/>
+        <body>
+          <![CDATA[
+            this.removeAttribute("childselected");
+            this.checked = !this.checked;
+
+            aEvent.target.doCommand();
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Toogles the checked value when the keypress event is called.
+        -->
+      <method name="_handleKeyPress">
+        <parameter name="aEvent"/>
+        <body>
+          <![CDATA[
+            if (aEvent.charCode == 32) {
+              this._toogleChecked(aEvent);
+            }
+          ]]>
+        </body>
+      </method>
+
+    </implementation>
+  </binding>
+
+</bindings>
