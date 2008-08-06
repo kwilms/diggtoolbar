@@ -1,0 +1,126 @@
+/**
+ * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+interface nsIFile;
+interface nsIArray;
+interface nsIDOMNode;
+
+/**
+ * Utility service. Contains some general utility methods that are commonly
+ * used in our extensions.
+ */
+[scriptable, uuid(0887D15C-0D00-48B4-B55B-7A6CF7120F9E)]
+interface gsIUtilityService : nsISupports
+{
+  // Windows operating system identifier, except Windows Vista.
+  const short OS_WINDOWS = 0;
+  // Windows Vista identifier.
+  const short OS_WINDOWS_VISTA = 1;
+  // Mac operating system identifier.
+  const short OS_MAC = 2;
+  // Linux operating system identifier.
+  const short OS_LINUX = 3;
+  // Other operating system identifier.
+  const short OS_OTHER = 4;
+
+  // Firefox version 2.* identiier.
+  const short FIREFOX_VERSION_2 = 2;
+  // Firefox version 3.* identiier.
+  const short FIREFOX_VERSION_3 = 3;
+
+  /* The current Firefox version (full version number). */
+  readonly attribute AUTF8String firefoxVersion;
+
+  /**
+   * Determines if the current firefox version is a specified one.
+   * @param aFirefoxVersion A short number of the version to compare with.
+   * @return boolean flag indicating if the current firefox version is or is not
+   * the one specified by the parameter.
+   */
+  boolean isCurrentFirefoxVersion(in short aFirefoxVersion);
+
+  /**
+   * Obtains a reference to the folder where a particular extension will write
+   * and keep its persistent files. The folder will be created if it doesn't
+   * exist.
+   * @param aFolderName the name of the folder to obtain / create. It should be
+   * unique to the extension. A null or empty value will cause the common
+   * Glaxstar folder to be returned.
+   * @return nsIFile reference to the extension folder.
+   */
+  nsIFile getExtensionFolder(in AUTF8String aFolderName);
+
+  /**
+   * Obtains a reference to the defaults folder for a specific extension.
+   * @param aExtensionUUID the UUID of the extension.
+   * @return nsIFile reference to the defaults folder for the extension matching
+   * the given UUID.
+   */
+  nsIFile getDefaultsFolder(in AUTF8String aExtensionUUID);
+
+  /**
+   * Wraps a JS object in the native XPCOM wrapper. This is used when an XPCOM
+   * is not instantiated throught the regular Components.classes procedure and
+   * it's necessary for it to behave as a regular XPCOM, particularly work with
+   * the 'instanceof' operator.
+   * @param aJSObject regular JS object that represents an XPCOM component.
+   * @return wrapped native XPCOM component that corresponds to the given
+   * object.
+   */
+  nsISupports wrapJSObject(in nsISupports aJSObject);
+
+  /**
+   * Obtains an identifier for the operating system this extension is running
+   * on.
+   * @return any of the OS constants defined in this interface.
+   */
+  short getOperatingSystem();
+
+  /**
+   * Get the operating sytem name.
+   * @return string name of the operating system.
+   */
+  AUTF8String getOperatingSystemName();
+
+  /**
+   * Trims a string (both start and end).
+   * @param aString The string to be trimmed.
+   * @return The trimmed string.
+   */
+  AUTF8String trim(in AUTF8String aString);
+
+  /**
+   * Returns true if the given string is null or empty.
+   * @param aString the string to check.
+   * @return true if the string is null or empty. Returns false otherwise. Note
+   * that this method returns false for strings with blank characters, like " ".
+   */
+  boolean isNullOrEmpty(in AUTF8String aString);
+
+  /**
+   * Returns true if the given string is a valid email address.
+   * @param aString the string to check.
+   * @return true if the string is a valir email address. Returns false
+   * otherwise. Note that this method returns false for empty an null strings.
+   */
+  boolean isValidEmailAddress(in AUTF8String aString);
+
+  /**
+   * Generates a UUID.
+   * @return an UUID.
+  */
+  AUTF8String generateUUID();
+
+  /**
+   * Returns a nsIArray of elements that match the given aXPathExpression,
+   * from the aXMLNode specified, using xpath.
+   * @param aXMLNode The XML node or document to search for matches.
+   * @param aXPathExpresion The xpath expression to be used in the search.
+   * @return A nsIArray with the elements that matched the xpath expression.
+   */
+  nsIArray evaluateXPath(
+    in nsIDOMNode aXMLNode, in AUTF8String aXPathExpression);
+};

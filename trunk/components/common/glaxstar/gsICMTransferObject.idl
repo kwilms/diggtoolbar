@@ -1,0 +1,208 @@
+/**
+ * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+/**
+ * The data transfer object to be user between API methods and API consumers.
+ */
+[scriptable, uuid(2025DE0D-7CC2-4264-A8DD-D625F2E496F6)]
+interface gsICMTransferObject : nsISupports
+{
+  /**
+   * Parses the given JSON string and initializes the object. Existing name /
+   * value mappings will be removed.
+   * The code is based on Mozilla code,
+   * http://lxr.mozilla.org/mozilla/source/browser/components/search/
+   * nsSearchSuggestions.js#525
+   * @param aJSONString the string used to initialize the object.
+   * @param aDomain the domain from which the JSON string was obtained.
+   * @throws Exception for any parse error that may occur.
+   */
+  void fromJSON(in AUTF8String aJSONString, in AUTF8String aDomain);
+
+  /**
+   * Outputs the contents of this object as a POST string.
+   * XXX: an object can be converted to POST only if it contains either:
+   * - Simple (not object or array) values.
+   * - String arrays.
+   * - Arrays of objects with simple (not object or array) values.
+   * Different data structures are not guaranteed to work.
+   * @return POST string representation of this object.
+   * @throws Exception if the object doesn't have the expected structure.
+   */
+  AUTF8String toPOST();
+
+  /**
+   * Indicates if this object represents an array or not.
+   * @return true if the object represents an array. false otherwise.
+   * @throws Exception if the object has not been initialized.
+   */
+  boolean isArray();
+
+  /**
+   * Indicates if the object holds a value identified by the given name.
+   * @param aName the name of the value to look for.
+   * @return true if the object has a value with the given name. false
+   * otherwise.
+   * @throws Exception if the object has not been initialized or if the object
+   * represents an array.
+   */
+  boolean hasValue(in AUTF8String aName);
+
+  /**
+   * Removes a value from the transfer object by its name.
+   * @param aName The name of the value to look for.
+   * @return True if the value was found and removed, false otherwise.
+   * @throws Exception if the object has not been initialized or if the object
+   * represents an array.
+   */
+  boolean removeValue(in AUTF8String aName);
+
+  /**
+   * Gets the boolean value identified by the given name.
+   * @param aName the name of the boolean value to obtain.
+   * @return boolean value that corresponds to the name.
+   * @throws Exception if the object has not been initialized, if the type
+   * does not match the given name, or if the name is null or empty.
+   */
+  boolean getBooleanValue(in AUTF8String aName);
+
+  /**
+   * Gets the boolean array represented by this object.
+   * @param aLength the length of the resulting array.
+   * @param aArray the resulting array.
+   * @throws Exception if the object has not been initialized or if the object
+   * is not an array or doesn't match the requested type.
+   */
+  void getBooleanArray(
+    out PRUint32 aLength, [array, size_is(aLength)] out boolean aArray);
+
+  /**
+   * Sets the boolean value identified by the given name.
+   * @param aName the name of the boolean value to set.
+   * @param aValue the value to set.
+   * @throws Exception if the name is null or empty.
+   */
+  void setBooleanValue(in AUTF8String aName, in boolean aValue);
+
+  /**
+   * Sets this object to be a boolean array.
+   * @param aLength the length of the array.
+   * @param aArray the array to set.
+   */
+  void setBooleanArray(
+    in PRUint32 aLength, [array, size_is(aLength)] in boolean aArray);
+
+  /**
+   * Gets the integer value identified by the given name.
+   * @param aName the name of the integer value to obtain.
+   * @return integer value that corresponds to the name.
+   * @throws Exception if the object has not been initialized, if the type
+   * does not match the given name, or if the name is null or empty.
+   */
+  long getIntegerValue(in AUTF8String aName);
+
+  /**
+   * Gets the integer array represented by this object.
+   * @param aLength the length of the resulting array.
+   * @param aArray the resulting array.
+   * @throws Exception if the object has not been initialized or if the object
+   * is not an array or doesn't match the requested type.
+   */
+  void getIntegerArray(
+    out PRUint32 aLength, [array, size_is(aLength)] out long aArray);
+
+  /**
+   * Sets the integer value identified by the given name.
+   * @param aName the name of the integer value to set.
+   * @param aValue the value to set.
+   * @throws Exception if the name is null or empty.
+   */
+  void setIntegerValue(in AUTF8String aName, in long aValue);
+
+  /**
+   * Sets this object to be an integer array.
+   * @param aLength the length of the array.
+   * @param aArray the array to set.
+   */
+  void setIntegerArray(
+    in PRUint32 aLength, [array, size_is(aLength)] in long aArray);
+
+  /**
+   * Gets the string value identified by the given name.
+   * @param aName the name of the string value to obtain.
+   * @return string value that corresponds to the name.
+   * @throws Exception if the object has not been initialized, if the type
+   * does not match the given name, or if the name is null or empty.
+   */
+  AUTF8String getStringValue(in AUTF8String aName);
+
+  /**
+   * Gets the string array represented by this object.
+   * @param aLength the length of the resulting array.
+   * @param aArray the resulting array.
+   * @throws Exception if the object has not been initialized or if the object
+   * is not an array or doesn't match the requested type.
+   */
+  void getStringArray(
+    out PRUint32 aLength, [array, size_is(aLength)] out string aArray);
+
+  /**
+   * Sets the string value identified by the given name.
+   * @param aName the name of the string value to set.
+   * @param aValue the value to set.
+   * @throws Exception if a null string is passed or if the name is null or
+   * empty.
+   */
+  void setStringValue(in AUTF8String aName, in AUTF8String aValue);
+
+  /**
+   * Sets this object to be a string array.
+   * @param aLength the length of the array.
+   * @param aArray the array to set.
+   * @throws Exception if a null string is passed.
+   */
+  void setStringArray(
+    in PRUint32 aLength, [array, size_is(aLength)] in string aArray);
+
+  /**
+   * Gets the object value identified by the given name.
+   * @param aName the name of the object value to obtain.
+   * @return gsICMTransferObject value that corresponds to the name.
+   * @throws Exception if the object has not been initialized, if the type
+   * does not match the given name, or if the name is null or empty.
+   */
+  gsICMTransferObject getObjectValue(in AUTF8String aName);
+
+  /**
+   * Gets the object array represented by this object.
+   * @param aLength the length of the resulting array.
+   * @param aArray the resulting array.
+   * @throws Exception if the object has not been initialized or if the object
+   * is not an array or doesn't match the requested type.
+   */
+  void getObjectArray(
+    out PRUint32 aLength,
+    [array, size_is(aLength)] out gsICMTransferObject aArray);
+
+  /**
+   * Sets the object value identified by the given name.
+   * @param aName the name of the object value to set.
+   * @param aValue the gsICMTransferObject value to set.
+   * @throws Exception if a null object is passed or if the name is null or
+   * empty.
+   */
+  void setObjectValue(in AUTF8String aName, in gsICMTransferObject aValue);
+
+  /**
+   * Sets this object to be an object array.
+   * @param aLength the length of the array.
+   * @param aArray the array to set.
+   * @throws Exception if a null object is passed.
+   */
+  void setObjectArray(
+    in PRUint32 aLength,
+    [array, size_is(aLength)] in gsICMTransferObject aArray);
+};

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+
+<!--
+***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****
+-->
+
+<?xml-stylesheet type="text/css" href="chrome://global/skin/" ?>
+<?xml-stylesheet type="text/css"
+  href="chrome://browser/skin/preferences/preferences.css" ?>
+<?xml-stylesheet type="text/css"
+  href="chrome://digg/skin/setup/gsDiggSetupWindow.css" ?>
+
+<!DOCTYPE wizard [
+  <!ENTITY % gsDiggSetupDTD SYSTEM
+    "chrome://digg/locale/setup/gsDiggSetupWindow.dtd" >
+  %gsDiggSetupDTD;
+]>
+
+<wizard id="gs-digg-setup-window"
+  title="&gs.digg.setup.title;"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  onload="gsDiggSetupWindow.init()"
+  onunload="gsDiggSetupWindow.uninit()"
+  onwizardcancel="gsDiggSetupWindow.onCancel()"
+  onwizardfinish="gsDiggSetupWindow.saveSettings()">
+
+  <script type="application/x-javascript"
+    src="chrome://digg/content/setup/gsDiggSetupWindow.js" />
+
+  <stringbundleset>
+    <stringbundle id="gs-digg-setup-string-bundle"
+      src="chrome://digg/locale/setup/gsDiggSetupWindow.properties" />
+  </stringbundleset>
+
+  <wizardpage label="&gs.digg.wizard.page1.title;"
+    onpageadvanced="gsDiggSetupWindow.performUserAction();">
+    <description>&gs.digg.wizard.page1.description;</description>
+    <radiogroup id="gs-digg-wizard-radiogroup"
+      oncommand="gsDiggSetupWindow.selectRadioOption();">
+      <hbox align="center">
+        <radio value="1" label="&gs.digg.wizard.enter.user.label;"
+          selected="true"/>
+        <textbox id="gs-digg-wizard-user-name" size="30"
+          onfocus="gsDiggSetupWindow.selectUsernameOption();"/>
+      </hbox>
+      <radio value="2" label="&gs.digg.wizard.continue.user.label;" />
+    </radiogroup>
+  </wizardpage>
+
+  <wizardpage label="&gs.digg.wizard.page2.title;">
+    <description>&gs.digg.wizard.page2.description;</description>
+    <hbox id="gs-digg-notifications-box" />
+  </wizardpage>
+</wizard>

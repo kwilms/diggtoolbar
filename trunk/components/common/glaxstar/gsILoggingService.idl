@@ -1,0 +1,74 @@
+/**
+ * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+/**
+ * Logging service.
+ */
+[scriptable, uuid(F7BB7477-3A63-4226-828A-1A05441CAE56)]
+interface gsILoggingService : nsISupports
+{
+  // Logging level off.
+  const short LEVEL_OFF = 0;
+  // Logging level fatal.
+  const short LEVEL_FATAL = 100;
+  // Logging level error.
+  const short LEVEL_ERROR = 200;
+  // Logging level warning.
+  const short LEVEL_WARN = 300;
+  // Logging level information.
+  const short LEVEL_INFO = 400;
+  // Logging level debug.
+  const short LEVEL_DEBUG = 500;
+  // Logging level trace.
+  const short LEVEL_TRACE = 600;
+
+  /* Appender type for plain text dump output. */
+  readonly attribute AUTF8String APPENDER_CONSOLE_PLAIN;
+  /* Appender type for plain text files. */
+  readonly attribute AUTF8String APPENDER_FILE_PLAIN;
+
+  /* The current log level. It can be any of the LEVEL_ constants. */
+  attribute short logLevel;
+
+  /* The current appender type. It can be any of the APPENDER_ constants. */
+  attribute AUTF8String appenderType;
+
+  /**
+   * Attempts to log a message in FATAL level.
+   * @param aMessage the message to log.
+   */
+  void fatal(in AUTF8String aMessage);
+
+  /**
+   * Attempts to log a message in ERROR level.
+   * @param aMessage the message to log.
+   */
+  void error(in AUTF8String aMessage);
+
+  /**
+   * Attempts to log a message in WARN level.
+   * @param aMessage the message to log.
+   */
+  void warn(in AUTF8String aMessage);
+
+  /**
+   * Attempts to log a message in INFO level.
+   * @param aMessage the message to log.
+   */
+  void info(in AUTF8String aMessage);
+
+  /**
+   * Attempts to log a message in DEBUG level.
+   * @param aMessage the message to log.
+   */
+  void debug(in AUTF8String aMessage);
+
+  /**
+   * Attempts to log a message in TRACE level.
+   * @param aMessage the message to log.
+   */
+  void trace(in AUTF8String aMessage);
+};

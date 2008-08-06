@@ -1,0 +1,659 @@
+<?xml version="1.0"?>
+
+<!--
+***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****
+-->
+
+<!DOCTYPE prefwindow [
+  <!ENTITY % gsDiggEventBoxDTD SYSTEM
+    "chrome://digg/locale/events/gsDiggEventBox.dtd" >
+  %gsDiggEventBoxDTD;
+]>
+
+<bindings xmlns="http://www.mozilla.org/xbl"
+  xmlns:xbl="http://www.mozilla.org/xbl"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <!--
+    - Event Box. Displays the information of a Digg event (story, friend
+    - submission, digg, comment, admin message)
+    -->
+  <binding id="gs-digg-event-box">
+    <resources>
+      <stylesheet src="chrome://digg/skin/events/gsDiggEventBox.css"/>
+    </resources>
+    <content>
+      <xul:stringbundleset>
+        <xul:stringbundle anonid="stringBundle"
+          src="chrome://digg/locale/events/gsDiggEventBox.properties" />
+      </xul:stringbundleset>
+
+      <xul:hbox class="outerBox" flex="1">
+
+        <xul:vbox class="arrowBox">
+          <xul:spacer class="closeButton" />
+          <xul:image class="leftArrow"
+            xbl:inherits="disabled=leftNavigationDisabled"
+            onclick="if (this.getAttribute('disabled') != 'true') { gsDiggEventViewer.showPrevious(); }"
+            tooltiptext="&gs.digg.eventBox.previous.tooltip;" />
+        </xul:vbox>
+
+        <xul:hbox class="divider" />
+
+        <xul:vbox flex="1" class="mainBox">
+          <xul:hbox class="topBox" flex="1">
+
+            <xul:hbox class="alertBox" xbl:inherits="hidden=alertHidden">
+              <xul:image/>
+            </xul:hbox>
+
+            <xul:vbox class="diggsBox" xbl:inherits="hidden=diggsHidden">
+              <xul:vbox class="diggsNumberBox"
+                onclick="_openStory(GS_DIGG_TRACKING_CODE_NOTIFICATION_DIGGS)">
+                <xul:description class="diggsNumber"
+                  xbl:inherits="value=diggs"/>
+                <xul:description xbl:inherits="value=diggsLabel"/>
+              </xul:vbox>
+              <xul:hbox class="diggItBox link"
+                onclick="_openStory(GS_DIGG_TRACKING_CODE_NOTIFICATION_DIGGIT)">
+                <xul:label value="&gs.digg.eventBox.diggIt.label;"/>
+              </xul:hbox>
+            </xul:vbox>
+
+            <xul:hbox class="imageBox" xbl:inherits="hidden=leftImageHidden">
+              <xul:hbox class="imageBorder">
+                <xul:image class="image" xbl:inherits="style=imageStyle,media"/>
+              </xul:hbox>
+            </xul:hbox>
+
+            <xul:vbox class="contentBox" flex="1"
+              onoverflow="_startDescriptionCrop()"
+              onunderflow="_stopDescriptionCrop()">
+              <xul:description class="title link" crop="end"
+                xbl:inherits=
+                  "value=eventTitle,tooltiptext=eventTitle,diggTrackingCode=titleTrackingCode"
+                onclick="_openStory(this.getAttribute('diggTrackingCode'))" />
+              <xul:vbox anonid="descriptionBox" class="descriptionBox" />
+              <xul:hbox align="center" xbl:inherits="hidden=commentsHidden"
+                onclick="_openStory(GS_DIGG_TRACKING_CODE_NOTIFICATION_COMMENTS)">
+                <xul:image class="commentsImage"/>
+                <xul:description class="commentsLabel link"
+                  xbl:inherits="value=comments"/>
+              </xul:hbox>
+            </xul:vbox>
+
+            <xul:hbox class="imageBox" xbl:inherits="hidden=rightImageHidden">
+              <xul:hbox class="imageBorder">
+                <xul:image class="image" xbl:inherits="style=imageStyle"/>
+              </xul:hbox>
+            </xul:hbox>
+
+          </xul:hbox>
+          <xul:hbox class="bottomBox">
+
+            <xul:image class="eventImage"
+              xbl:inherits="eventType,hidden=eventInfoHidden" />
+            <xul:hbox anonid="eventInfo" class="eventLabel" flex="1"
+                crop="end" xbl:inherits="eventType,hidden=eventInfoHidden" />
+            <xul:spacer flex="1" />
+            <xul:label class="settingsLabel link"
+              value="&gs.digg.eventBox.settings.label;"
+              tooltiptext="&gs.digg.eventBox.settings.tooltip;"
+              onclick="_openSettingsWindow()" />
+            <xul:hbox class="smallDivider" />
+            <xul:label class="snoozeLabel link"
+              value="&gs.digg.eventBox.snooze.label;"
+              observes="gs-digg-snooze-broadcaster"
+              onclick="gsDiggMain.toggleSnooze()" />
+
+          </xul:hbox>
+        </xul:vbox>
+
+        <xul:hbox class="divider" />
+
+        <xul:vbox class="arrowBox">
+          <xul:image class="closeButton"
+            tooltiptext="&gs.digg.eventBox.closeButton.tooltip;"
+            onclick="gsDiggEventViewer.toggle()"/>
+          <xul:image class="rightArrow"
+            xbl:inherits="disabled=rightNavigationDisabled"
+            onclick="if (this.getAttribute('disabled') != 'true') { gsDiggEventViewer.showNext(); }"
+            tooltiptext="&gs.digg.eventBox.next.tooltip;" />
+        </xul:vbox>
+
+      </xul:hbox>
+    </content>
+    <implementation>
+
+      <!-- Holds the log service -->
+      <field name="_logService">null</field>
+
+      <!--
+        - Initializes the log service.
+        -->
+      <constructor><![CDATA[
+        this._logService =
+          Cc["@glaxstar.org/common/log-service;1"].
+            getService(Ci.gsILoggingService);
+        this._logService.debug("gsDiggEventBox[constructor]");
+        ]]>
+      </constructor>
+
+      <!-- The maximum number of friends to display when a story is dugg. -->
+      <field name="maxFriendsDisplayed">5</field>
+
+      <!-- Holds the current event object. -->
+      <field name="_event">null</field>
+
+      <property name="event">
+        <!--
+          - Gets the event that is currently displayed.
+          _ @return The event object that is currently displayed.
+          -->
+        <getter><![CDATA[
+          this._logService.debug("gsDiggEventBox.event[get]");
+          return this._event;
+          ]]>
+        </getter>
+
+        <!--
+          - Sets the event that will be displayed. The event box is prepared
+          - and displayed according to the properties of the event that is set.
+          - @param val The new event to be displayed.
+          -->
+        <setter><![CDATA[
+          this._logService.debug("gsDiggEventBox.event[set]");
+
+          if (!(val instanceof Ci.gsIDiggEvent)) {
+            throw Components.Exception("Invalid object type");
+          }
+          this._event = val;
+          this._clear();
+
+          var stringBundle = document.getAnonymousElementByAttribute(
+            this, "anonid", "stringBundle");
+
+          // Title
+          this.setAttribute("eventTitle", this._event.title);
+          this.setAttribute("titleTrackingCode",
+            ((Ci.gsIDiggEvent.EVENT_TYPE_ADMIN_MESSAGE == this._event.type) ?
+             GS_DIGG_TRACKING_CODE_NOTIFICATION_ADMIN_MESSAGE :
+             GS_DIGG_TRACKING_CODE_NOTIFICATION_TITLE));
+
+          // Alert icon
+          this.setAttribute("alertHidden",
+            (Ci.gsIDiggEvent.EVENT_TYPE_ADMIN_MESSAGE != this._event.type));
+
+          // Diggs
+          this.setAttribute("diggsHidden",
+            (Ci.gsIDiggEvent.EVENT_TYPE_ADMIN_MESSAGE == this._event.type));
+          this.setAttribute("diggs", this._event.diggs);
+          this.setAttribute("diggsLabel",
+            (1 == this._event.diggs) ?
+              stringBundle.getString("gs.digg.eventBox.diggs.singular") :
+              stringBundle.getString("gs.digg.eventBox.diggs.plural"));
+          this.setAttribute("diggsHidden", (0 >= this._event.diggs));
+
+          // Comments
+          this.setAttribute("comments",
+            (1 == this._event.comments) ?
+              stringBundle.getString("gs.digg.eventBox.comments.singular") :
+              stringBundle.getFormattedString(
+                "gs.digg.eventBox.comments.plural",[this._event.comments]));
+          this.setAttribute("commentsHidden",
+            (Ci.gsIDiggEvent.EVENT_TYPE_FRIEND_COMMENT == this._event.type ||
+             Ci.gsIDiggEvent.EVENT_TYPE_ADMIN_MESSAGE == this._event.type));
+
+          // Image
+          this.setAttribute("media", this._event.media);
+          this.setAttribute("imageStyle",
+            "background: url(" + this._event.imageURL + ") no-repeat center");
+
+          let isImageOrVideo =
+            (this._event.media == "videos" || this._event.media == "images");
+          this.setAttribute("leftImageHidden",
+            ("" == this._event.imageURL || !isImageOrVideo) ||
+            Ci.gsIDiggEvent.EVENT_TYPE_ADMIN_MESSAGE == this._event.type);
+          this.setAttribute("rightImageHidden",
+            ("" == this._event.imageURL || isImageOrVideo) ||
+            Ci.gsIDiggEvent.EVENT_TYPE_ADMIN_MESSAGE == this._event.type);
+
+          // Event type and info (lowest label)
+          this.setAttribute("eventInfoHidden",
+            (Ci.gsIDiggEvent.EVENT_TYPE_ADMIN_MESSAGE == this._event.type));
+          this.setAttribute("eventType", this._event.type);
+
+          var eventInfo = document.
+            getAnonymousElementByAttribute(this, "anonid", "eventInfo");
+          // Clear element
+          while (eventInfo.firstChild) {
+            eventInfo.removeChild(eventInfo.firstChild);
+          }
+
+          var infoWrapper =
+            document.createElementNS("http://www.w3.org/1999/xhtml", "span");
+          var userTags = "";
+
+          switch (this._event.type) {
+
+            case Ci.gsIDiggEvent.EVENT_TYPE_STORY:
+              infoWrapper.innerHTML =
+                stringBundle.getFormattedString(
+                  "gs.digg.eventBox.popularEvent",
+                  [this._toHowLongAgo(this._event.date)]);
+              break;
+
+            case Ci.gsIDiggEvent.EVENT_TYPE_FRIEND_SUBMISSION:
+              userTags =
+                '<span class="user link" onclick="document.getBindingParent' +
+                '(this)._openUser(\'' + this._event.user + '\', ' +
+                'GS_DIGG_TRACKING_CODE_NOTIFICATION_SUBMITTER)">' +
+                this._event.user + '</span>';
+
+              infoWrapper.innerHTML =
+                stringBundle.getFormattedString(
+                  "gs.digg.eventBox.submissionEvent",
+                  [userTags, this._toHowLongAgo(this._event.date)]);
+              break;
+
+            case Ci.gsIDiggEvent.EVENT_TYPE_FRIEND_COMMENT:
+              userTags =
+                '<span class="user link" onclick="document.getBindingParent' +
+                '(this)._openUser(\'' + this._event.friends + '\', ' +
+                'GS_DIGG_TRACKING_CODE_NOTIFICATION_COMMENTER)">' +
+                this._event.friends + '</span>';
+
+              infoWrapper.innerHTML =
+                stringBundle.getFormattedString(
+                  "gs.digg.eventBox.commentEvent",
+                  [userTags, this._toHowLongAgo(this._event.date)]);
+              break;
+
+            case Ci.gsIDiggEvent.EVENT_TYPE_FRIEND_DIGG:
+              var friendArray = this._event.friends.split(",");
+              for (var i = 0;
+                   i < friendArray.length && i < this.maxFriendsDisplayed;
+                   i++) {
+                if (i > 0) {
+                  userTags += ", ";
+                }
+                userTags +=
+                  '<span class="user link" onclick="document.getBindingParent' +
+                  '(this)._openUser(\'' + friendArray[i] + '\', ' +
+                  'GS_DIGG_TRACKING_CODE_NOTIFICATION_DIGGER)">' +
+                  friendArray[i] + '</span>';
+              }
+              if (friendArray.length > this.maxFriendsDisplayed) {
+                userTags += "...";
+              }
+
+              infoWrapper.innerHTML =
+                stringBundle.getFormattedString(
+                  "gs.digg.eventBox.diggEvent",
+                  [userTags, this._toHowLongAgo(this._event.date)]);
+              break;
+          }
+          eventInfo.appendChild(infoWrapper);
+
+          this._setDescription(this._stripTags(this._event.description));
+        ]]>
+        </setter>
+      </property>
+
+      <!--
+        - Opens the target URL of the story (href property).
+        - @param aTrackingCode The Digg tracking code to be appended to the URL.
+        -->
+      <method name="_openStory">
+        <parameter name="aTrackingCode" />
+        <body><![CDATA[
+          this._logService.trace("gsDiggEventBox._openStory");
+
+          var url = this._event.href;
+          var params = url.lastIndexOf("?");
+          if (params > 0) {
+            url = url.substring(0, params);
+          }
+          this._openURL(url, aTrackingCode);
+        ]]>
+        </body>
+      </method>
+
+      <!--
+        - Opens the URL of the story comment.
+        - @param aTrackingCode The Digg tracking code to be appended to the URL.
+        -->
+      <method name="_openComment">
+        <parameter name="aTrackingCode" />
+        <body><![CDATA[
+          this._logService.trace("gsDiggEventBox._openComment");
+          this._openURL(this._event.href, aTrackingCode);
+        ]]>
+        </body>
+      </method>
+
+      <!--
+        - Opens the URL of a Digg user.
+        - @param aUserName The user name of the user whose page will be opened.
+        - @param aTrackingCode The Digg tracking code to be appended to the URL.
+        -->
+      <method name="_openUser">
+        <parameter name="aUserName" />
+        <parameter name="aTrackingCode" />
+        <body><![CDATA[
+          this._logService.trace("gsDiggEventBox._openUser");
+          this._openURL(
+            "http://www.digg.com/users/" + aUserName, aTrackingCode);
+        ]]>
+        </body>
+      </method>
+
+      <!--
+        - Opens the URL of the current story topic.
+        - @param aTrackingCode The Digg tracking code to be appended to the URL.
+        -->
+      <method name="_openTopic">
+        <parameter name="aTrackingCode" />
+        <body><![CDATA[
+          this._logService.trace("gsDiggEventBox._openTopic");
+
+          var url = this._event.href;
+          var lastSlash = url.lastIndexOf("/");
+          if (lastSlash > 0) {
+            url = url.substring(0, lastSlash);
+          }
+          this._openURL(url, aTrackingCode);
+        ]]>
+        </body>
+      </method>
+
+      <!--
+        - Opens a URL and closes the event viewer.
+        - @param aURL The URL to be opened.
+        - @param aTrackingCode The Digg tracking code to be appended to the URL.
+        -->
+      <method name="_openURL">
+        <parameter name="aURL" />
+        <parameter name="aTrackingCode" />
+        <body><![CDATA[
+          this._logService.trace("gsDiggEventBox._openURL");
+
+          if (aTrackingCode) {
+            gsDiggEventViewer.toggle();
+            gsDiggMain.openURL(aURL, aTrackingCode);
+          }
+        ]]>
+        </body>
+      </method>
+
+      <!--
+        - Opens the settings window.
+        -->
+      <method name="_openSettingsWindow">
+        <body><![CDATA[
+          this._logService.trace("gsDiggEventBox._openSettingsWindow");
+
+          gsDiggEventViewer.toggle();
+
+          // XXX: Open the window after one second has passed to prevent the
+          // new window from losing focus.
+          window.setTimeout(function() {
+            gsDiggMain.openSettingsWindow();
+          }, 1000);
+        ]]>
+        </body>
+      </method>
+
+      <!--
+        - Clears the description text in the event box.
+        -->
+      <method name="_clear">
+        <body><![CDATA[
+          this._logService.trace("gsDiggEventBox._clear");
+
+          this._stopDescriptionCrop();
+
+          var descriptionBox =
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "descriptionBox");
+
+          while (descriptionBox.hasChildNodes()) {
+            descriptionBox.removeChild(descriptionBox.firstChild);
+          }
+        ]]>
+        </body>
+      </method>
+
+      <!-- Holds a reference to the timer used to crop the description text. -->
+      <field name="_cropTimer">null</field>
+
+      <!--
+        - Starts the description crop timed script. On every iteration of the
+        - timer the text is cropped further until it fits in the available
+        - space.
+        -->
+      <method name="_startDescriptionCrop">
+        <body><![CDATA[
+          this._logService.trace("gsDiggEventBox._startDescriptionCrop");
+
+          var that = this;
+          var descriptionText =
+            this._crop(this._stripTags(this._event.description));
+
+          this._cropTimer =
+            window.setInterval(function() {
+              try {
+                that._setDescription(descriptionText);
+                descriptionText =
+                  descriptionText.substring(0, descriptionText.length - 100);
+              } catch (e) {
+                that._stopDescriptionCrop();
+              }
+            }, 1);
+        ]]>
+        </body>
+      </method>
+
+      <!--
+        - Stops the description crop timed script.
+        -->
+      <method name="_stopDescriptionCrop">
+        <body><![CDATA[
+          this._logService.trace("gsDiggEventBox._stopDescriptionCrop");
+          window.clearInterval(this._cropTimer);
+        ]]>
+        </body>
+      </method>
+
+      <!--
+        - Sets the description text of the event.
+        - @param aCroppedDescription The description after it has been cropped.
+        -->
+      <method name="_setDescription">
+        <parameter name="aCroppedDescription" />
+        <body><![CDATA[
+          // XXX: No logging here for efficiency reasons
+
+          var descriptionBox =
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "descriptionBox");
+
+          var wrapper =
+            document.createElementNS("http://www.w3.org/1999/xhtml", "span");
+          wrapper.setAttribute("class", "description");
+
+          if (this._event.type == Ci.gsIDiggEvent.EVENT_TYPE_FRIEND_COMMENT) {
+            wrapper.innerHTML =
+              '<div class="quote"></div>' +
+              '<span class="link" onclick="document.getBindingParent(this).' +
+              '_openComment(GS_DIGG_TRACKING_CODE_NOTIFICATION_COMMENT)">' +
+              this._htmlEntities(aCroppedDescription) +
+              (aCroppedDescription != this._event.description ? "..." : "") +
+              '</span>';
+
+          } else if (this._event.type ==
+                     Ci.gsIDiggEvent.EVENT_TYPE_ADMIN_MESSAGE) {
+            wrapper.innerHTML =
+              this._htmlEntities(aCroppedDescription) +
+              (aCroppedDescription != this._event.description ? "..." : "");
+
+          } else {
+            wrapper.innerHTML =
+              '<span class="domain">' + this._htmlEntities(this._event.domain) +
+              ' - </span>' + this._htmlEntities(aCroppedDescription) +
+              (aCroppedDescription != this._event.description ? "..." : "") +
+              ' (<span class="topic link" onclick="document.getBindingParent' +
+              '(this)._openTopic(GS_DIGG_TRACKING_CODE_NOTIFICATION_TOPIC)">' +
+              this._htmlEntities(this._event.topic) + '</span>)';
+          }
+
+          while (descriptionBox.hasChildNodes()) {
+            descriptionBox.removeChild(descriptionBox.firstChild);
+          }
+          descriptionBox.appendChild(wrapper);
+        ]]>
+        </body>
+      </method>
+
+      <!--
+        - Strips all HTML tags from the given string.
+        - @param aString The string to be modified.
+        - @return The modified string.
+        -->
+      <method name="_stripTags">
+        <parameter name="aString" />
+        <body><![CDATA[
+          this._logService.trace("gsDiggEventBox._removeInnerTags");
+
+          const TAG_REGEX = /<a[^>]+>([^<]+)<\/a>/gi;
+          var result = aString;
+          var match;
+
+          match = TAG_REGEX.exec(aString);
+          while (match) {
+            result = result.replace(match[0], match[1]);
+            match = TAG_REGEX.exec(aString);
+          }
+
+          return result;
+        ]]>
+        </body>
+      </method>
+
+      <!--
+        - Converts HTML entities inside the given string to their encoded form.
+        - @param aString The string to be modified.
+        - @return The modified string.
+        -->
+      <method name="_htmlEntities">
+        <parameter name="aString" />
+        <body><![CDATA[
+          this._logService.trace("gsDiggEventBox._htmlEntities");
+
+          var div =
+            document.createElementNS("http://www.w3.org/1999/xhtml", "div");
+          div.textContent = aString;
+          return div.innerHTML;
+        ]]>
+        </body>
+      </method>
+
+      <!-- The initial maximum length for the description text. -->
+      <field name="maxDescriptionLength">200</field>
+
+      <!--
+        - Crops the given string if it is longer than the value specified by
+        - this.maxDescriptionLength.
+        - @param aString The string to be cropped.
+        - @return The potentially cropped string.
+        -->
+      <method name="_crop">
+        <parameter name="aString" />
+        <body><![CDATA[
+          this._logService.trace("gsDiggEventBox._crop");
+
+          if (aString.length > this.maxDescriptionLength) {
+            aString = aString.substring(0, this.maxDescriptionLength);
+          }
+          return aString;
+        ]]>
+        </body>
+      </method>
+
+      <!--
+        - Converts a time value to a string that says how long ago that time
+        - occurred when compared to the current time.
+        - @param aTime The time value to be converted.
+        - @return The time converted to its "how long ago" string
+        - representation.
+        -->
+      <method name="_toHowLongAgo">
+        <parameter name="aTime" />
+        <body><![CDATA[
+          this._logService.trace("gsDiggEventBox._toHowLongAgo");
+
+          var result = "";
+          var stringBundle = document.getAnonymousElementByAttribute(
+            this, "anonid", "stringBundle");
+
+          var oneMinute = 60 * 1000;
+          var oneHour = 60 * oneMinute;
+          var oneDay = 24 * oneHour;
+
+          var now = new Date();
+          var old = new Date(aTime * 1000);
+          var time = now.getTime() - old.getTime();
+
+          if (time > oneDay) {
+            result = stringBundle.getFormattedString(
+              "gs.digg.eventBox.date",
+              [old.getFullYear(), old.getMonth(), old.getDate()]);
+
+          } else {
+            var hours = Math.floor(time / oneHour);
+            time -= hours * oneHour;
+            var mins = Math.floor(time / oneMinute);
+
+            if (hours > 0) {
+              result += stringBundle.getFormattedString(
+                "gs.digg.eventBox.hours", [hours]) + " ";
+            }
+            if (mins > 0) {
+              result += stringBundle.getFormattedString(
+                "gs.digg.eventBox.minutes", [mins]) + " ";
+            }
+            if (result == "") {
+              result = stringBundle.getString("gs.digg.eventBox.oneMinute");
+            }
+          }
+
+          return result;
+        ]]>
+        </body>
+      </method>
+    </implementation>
+  </binding>
+</bindings>

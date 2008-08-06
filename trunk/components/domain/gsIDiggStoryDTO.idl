@@ -1,0 +1,81 @@
+/***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****/
+
+#include "nsISupports.idl"
+interface nsIArray;
+interface gsICMTransferObject;
+interface gsIDiggUserDTO;
+interface gsIDiggMediaDTO;
+interface gsIDiggTopicDTO;
+interface gsIDiggContainerDTO;
+interface gsIDiggThumbnailDTO;
+
+/**
+ * Story DTO
+ * Stores story info
+ */
+[scriptable, uuid(2471804A-AF01-49F2-8139-836BE58D6243)]
+interface gsIDiggStoryDTO : nsISupports
+{
+  /* Story id */
+  attribute AUTF8String storyId;
+  /* Story link */
+  attribute AUTF8String link;
+  /* Story submit date */
+  attribute unsigned long submitDate;
+  /* Story promote date */
+  attribute unsigned long promoteDate;
+  /* Story title */
+  attribute AUTF8String title;
+  /* Story description */
+  attribute AUTF8String description;
+  /* Story status */
+  attribute AUTF8String status;
+  /* Story href */
+  attribute AUTF8String href;
+  /* Story diggs (count) */
+  attribute short diggs;
+  /* Story comments (count) */
+  attribute short comments;
+  /* Story user */
+  attribute gsIDiggUserDTO user;
+  /* Story topic */
+  attribute gsIDiggMediaDTO media;
+  /* Story topic */
+  attribute gsIDiggTopicDTO topic;
+  /* Story container */
+  attribute gsIDiggContainerDTO container;
+  /* Story thumbnail */
+  attribute gsIDiggThumbnailDTO thumbnail;
+  /* Friend users related with the story */
+  attribute nsIArray friends;
+
+  /**
+   * Populates the storyDTO with the information contained in the
+   * gsICMTransferObject.
+   * @param aCMTransferObject the transfer object to extract the story data.
+   */
+  void populateFromTO(in gsICMTransferObject aCMTransferObject);
+};

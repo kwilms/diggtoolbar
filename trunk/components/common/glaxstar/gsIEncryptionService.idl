@@ -1,0 +1,62 @@
+/**
+ * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+/**
+ * Encryption service. It handles encryption and decryption of strings.
+ * Taken from:
+ * FIRE ENCRYPTER BUILD 2.9 / 3.0
+ * By Ronald van den Heetkamp
+ * www.jungsonnstudios.com
+ */
+[scriptable, uuid(39EBB6C6-59A2-4BC2-99C6-90B68E64088A)]
+interface gsIEncryptionService : nsISupports
+{
+  /**
+   * Encrypts a string of data using the 128 bit AES encryption algorithm.
+   * @param aData the data to encrypt.
+   * @param aKey the key used to encrypt the data.
+   * @return the given data encrypted with the 128 bit AES algorithm, using the
+   * given key.
+   * @throws Exception if any of the arguments is invalid.
+   */
+  AUTF8String encryptAES128(in AUTF8String aData, in AUTF8String aKey);
+
+  /**
+   * Decrypts a string of data using the 128 bit AES encryption algorithm.
+   * @param aEncryptedData the data to decrypt.
+   * @param aKey the key used to decrypt the data.
+   * @return the decrypted data with the 128 bit AES algorithm, using the given
+   * key.
+   * @throws Exception if any of the arguments is invalid.
+   */
+  AUTF8String decryptAES128(in AUTF8String aEncryptedData, in AUTF8String aKey);
+
+  /**
+   * Performs a one way hash on a string of data using the 256 bit SHA
+   * algorithm.
+   * @param aData the data to hash.
+   * @return the given data hashed with the 256 bit SHA algorithm.
+   * @throws Exception if the data string is null.
+   */
+  AUTF8String hashSHA512(in AUTF8String aData);
+
+  /**
+   * Adds some salt to the data passed as a parameter. The salt string is also
+   * passed as a parameter.
+   * @param aData the data to hash.
+   * @param aSaltString the string to be used to salt the data.
+   * @return the salted string.
+   */
+  AUTF8String addSalt(in AUTF8String aData, in AUTF8String aSaltString);
+
+  /**
+   * Performs an MD5 hash over a string and returns the hexadecimal
+   * representation of the hashed value.
+   * @param aData The string to be hashed.
+   * @return The hexadecimal representation of the hashed value.
+   */
+  AUTF8String hashMD5Hex(in AUTF8String aData);
+};

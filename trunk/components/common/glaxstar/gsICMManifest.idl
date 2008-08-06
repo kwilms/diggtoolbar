@@ -1,0 +1,89 @@
+/**
+ * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+interface gsICMTransferObject;
+interface gsICMDomain;
+interface gsICMMethod;
+interface gsICMFixedParameter;
+interface gsICMError;
+
+/**
+ * Represents the specification for an API, with its methods and possible
+ * calling domains.
+ */
+[scriptable, uuid(4C9C329F-D024-438A-B73A-327F4D4FFBBA)]
+interface gsICMManifest : nsISupports
+{
+  /**
+   * The result of the manifest generation. true if the manifest was obtained
+   * and generated successfully, false otherwise.
+   */
+  readonly attribute boolean result;
+
+  /**
+   * The amount of domains contained in this manifest. -1 if the object is not
+   * initialized.
+   */
+  readonly attribute short domainCount;
+
+  /**
+   * The amount of methods contained in this manifest. -1 if the object is not
+   * initialized.
+   */
+  readonly attribute short methodCount;
+
+  /**
+   * The amount of fixed parameters contained in this manifest. -1 if the object
+   * is not initialized.
+   */
+  readonly attribute short fixedParameterCount;
+
+  /**
+   * The amount of errors that occurred when trying to obtain the manifest. -1
+   * if the object is not initialized.
+   */
+  readonly attribute short errorCount;
+
+  /**
+   * Initializes the manifest.
+   * @param aTransferObj the gsICMTransferObject that holds the manifest
+   * information.
+   * @throws Exception if the transfer object is invalid or incomplete.
+   */
+  void initialize(in gsICMTransferObject aTransferObj);
+
+  /**
+   * Obtains the domain in the given index.
+   * @param aIndex the index to obtain the domain from.
+   * @return the gsICMDomain in the given index.
+   * @throws Exception if the object is not initialized or the index is invalid.
+   */
+  gsICMDomain getDomainAtIndex(in short aIndex);
+
+  /**
+   * Obtains the method in the given index.
+   * @param aIndex the index to obtain the method from.
+   * @return the gsICMMethod in the given index.
+   * @throws Exception if the object is not initialized or the index is invalid.
+   */
+  gsICMMethod getMethodAtIndex(in short aIndex);
+
+  /**
+   * Obtains the fixed parameter in the given index.
+   * @param aIndex The index to obtain the fixed parameter from.
+   * @return The gsICMFixedParameter in the given index.
+   * @throws Exception if the object is not initialized or the index is invalid.
+   */
+  gsICMFixedParameter getFixedParameterAtIndex(in short aIndex);
+
+  /**
+   * Obtains the error in the given index.
+   * @param aIndex the index to obtain the error from.
+   * @return the gsICMError in the given index.
+   * @throws Exception if the object is not initialized or the index is invalid.
+   */
+  gsICMError getErrorAtIndex(in short aIndex);
+};

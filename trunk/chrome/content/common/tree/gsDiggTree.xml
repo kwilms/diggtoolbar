@@ -1,0 +1,778 @@
+<?xml version="1.0"?>
+
+<!--
+***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****
+-->
+
+<bindings xmlns="http://www.mozilla.org/xbl"
+  xmlns:xbl="http://www.mozilla.org/xbl"
+  xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <!-- Tree -->
+  <binding id="gs-digg-tree">
+    <resources>
+      <stylesheet src="chrome://digg/skin/common/tree/gsDiggTree.css"/>
+    </resources>
+
+    <content>
+      <xul:stack flex="1">
+        <xul:scrollbox flex="1" class="gs-digg-tree-box"
+          anonid="gs-digg-tree-box">
+          <children includes="gsdiggtreecontainer" />
+        </xul:scrollbox>
+        <xul:vbox flex="1" hidden="true"
+          class="gs-digg-tree-throbber-box"
+          anonid="gs-digg-tree-throbber-box">
+          <xul:image class="gs-digg-tree-throbber" />
+        </xul:vbox>
+      </xul:stack>
+    </content>
+
+    <implementation>
+      <!--
+        - Loads the container and topic list preference into the tree.
+        - @param aContainerList the string list of containers.
+        - @param aTopicList the string list of topics.
+        -->
+      <method name="loadSelectedValues">
+        <parameter name="aContainerList" />
+        <parameter name="aTopicList" />
+        <body>
+          <![CDATA[
+            var containerList = aContainerList.split(",");
+            var topicList = aTopicList.split(",");
+            var element = null;
+            var elementName = null;
+
+            for (var i = 0; i < containerList.length; i++) {
+              elementName = containerList[i].replace(/\"/g, "");
+              element = this.findContainer(elementName);
+              if (element != null) {
+                element.selected = true;
+                element.selectCheckbox();
+              }
+            }
+
+            for (var i = 0; i < topicList.length; i++) {
+              elementName = topicList[i].replace(/\"/g, "");
+              element = this.findTopic(elementName);
+              if (element != null) {
+                element.selected = true;
+                element.selectCheckbox();
+              }
+            }
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Finds a container element in the tree.
+        - @param aContainerName the name of the container
+        - @return container
+        -->
+      <method name="findContainer">
+        <parameter name="aContainerName" />
+        <body>
+          <![CDATA[
+            var containerList = this.childNodes;
+            var container = null;
+
+            for (var i = 0; i < containerList.length; i++) {
+              if (aContainerName == containerList[i].containerDTO.shortName) {
+                container = containerList[i];
+                break;
+              }
+            }
+
+            return container;
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Finds a topic element in the tree.
+        - @param aTopicName the name of the topic
+        - @return topic
+        -->
+      <method name="findTopic">
+        <parameter name="aTopicName" />
+        <body>
+          <![CDATA[
+            var containerList = this.childNodes;
+            var topic = null;
+
+            for (var i = 0; i < containerList.length; i++) {
+              topic = containerList[i].findTopic(aTopicName);
+              if (topic != null) {
+                break;
+              }
+            }
+
+            return topic;
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Adds a container to the tree.
+        - @param aContainerDTO the container to be added.
+        -->
+      <method name="addContainer">
+        <parameter name="aContainerDTO" />
+        <body>
+          <![CDATA[
+            var container = document.createElement("gsdiggtreecontainer");
+            var topicDTO = null;
+            var enu = null;
+
+            this.appendChild(container);
+            container.collapseContainer();
+            container.containerDTO = aContainerDTO;
+
+            enu = aContainerDTO.topics.enumerate();
+            while (enu.hasMoreElements()) {
+              topicDTO = enu.getNext().QueryInterface(Ci.gsIDiggTopicDTO);
+              container.addTopic(topicDTO);
+            }
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Gets the list of selected topics
+        - @return the list of selected topics
+        -->
+      <method name="getSelectedContainerList">
+        <body>
+          <![CDATA[
+            var containerList = this.childNodes;
+            var container = null;
+            var selectedList = "";
+
+            for (var i = 0; i < containerList.length; i++) {
+              container = containerList[i];
+              if (container.selected) {
+                selectedList += "\"" + container.containerDTO.shortName + "\",";
+              }
+            }
+            if (selectedList != "") {
+              selectedList = selectedList.substr(0, selectedList.length - 1);
+            }
+
+            return selectedList;
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Gets the list of selected topics
+        - @return the list of selected topics
+        -->
+      <method name="getSelectedTopicList">
+        <body>
+          <![CDATA[
+            var containerList = this.childNodes;
+            var container = null;
+            var selectedList = "";
+
+            for (var i = 0; i < containerList.length; i++) {
+              container = containerList[i];
+              if (container.childSelected == "true") {
+                selectedList += container.getSelectedTopicList();
+              }
+            }
+            if (selectedList != "") {
+              selectedList = selectedList.substr(0, selectedList.length - 1);
+            }
+
+            return selectedList;
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Updates the container and topic list preferences.
+        -->
+      <method name="updatePreferences">
+        <body>
+          <![CDATA[
+            document.getElementById("gs-digg-settings-notify-container-list").
+              value = this.getSelectedContainerList();
+            document.getElementById("gs-digg-settings-notify-topic-list").
+              value = this.getSelectedTopicList();
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Sets the tree in busy state, showing a throbber.
+        - @param aValue true is busy, false otherwise
+        -->
+      <method name="setBusy">
+        <parameter name="aValue"/>
+        <body>
+          <![CDATA[
+             document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-throbber-box").hidden = !aValue;
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Scrolls the tree to ensure an element is visibled.
+        - @param aElement the child element to be scrolled.
+        -->
+      <method name="scrollToElement">
+        <parameter name="aElement"/>
+        <body>
+          <![CDATA[
+            var treeBox =  document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-box");
+            var scrollBox = treeBox.boxObject.
+              QueryInterface(Components.interfaces.nsIScrollBoxObject);
+
+            scrollBox.ensureElementIsVisible(aElement);
+            scrollBox.scrollToElement(aElement);
+          ]]>
+        </body>
+      </method>
+
+    </implementation>
+  </binding>
+
+  <!-- Tree container -->
+  <binding id="gs-digg-tree-container">
+    <resources>
+      <stylesheet src="chrome://digg/skin/common/tree/gsDiggTree.css"/>
+    </resources>
+
+    <handlers>
+      <handler event="focus" action="_handleFocus(event, true);"/>
+      <handler event="blur"  action="_handleFocus(event, false);"/>
+      <handler event="click"  action="_handleFocus(event, true);"/>
+      <handler event="keypress" keycode="VK_UP" action="_moveUp(event);"/>
+      <handler event="keypress" keycode="VK_DOWN" action="_moveDown(event);"/>
+      <handler event="keypress" keycode="VK_RIGHT" action="expandContainer();"/>
+      <handler event="keypress" keycode="VK_LEFT"
+        action="collapseContainer();"/>
+    </handlers>
+
+    <content>
+      <xul:vbox flex="1">
+        <xul:hbox anonid="gs-digg-tree-container-row"
+          class="gs-digg-tree-container-row">
+          <xul:hbox class="gs-digg-tree-container-twisty-box"
+            align="center" pack="center">
+            <xul:image anonid="gs-digg-tree-container-twisty"
+              class="gs-digg-tree-container-twisty"
+              onclick="toggleContainer();"/>
+          </xul:hbox>
+          <xul:gsdiggcheckbox anonid="gs-digg-tree-container-checkbox"
+            oncommand="selectCheckbox();"/>
+        </xul:hbox>
+        <xul:vbox anonid="gs-digg-tree-container-box">
+          <children includes="gsdiggtreetopic" />
+        </xul:vbox>
+      </xul:vbox>
+    </content>
+
+    <implementation>
+      <!-- Container DTO field. -->
+      <field name="_containerDTO">null</field>
+
+      <!-- Container DTO property. -->
+      <property name="containerDTO" >
+        <setter>
+          <![CDATA[
+            this._containerDTO = val;
+
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-container-checkbox").
+                label = this._containerDTO.name;
+          ]]>
+        </setter>
+        <getter>
+          <![CDATA[
+            return this._containerDTO;
+          ]]>
+        </getter>
+      </property>
+
+      <!-- Container selected property. -->
+      <property name="selected" >
+        <setter>
+          <![CDATA[
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-container-checkbox").checked = val;
+          ]]>
+        </setter>
+        <getter>
+          <![CDATA[
+            return document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-container-checkbox").checked;
+          ]]>
+        </getter>
+      </property>
+
+      <!-- Container child selected property. -->
+      <property name="childSelected" >
+        <setter>
+          <![CDATA[
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-container-checkbox").
+                setAttribute("childselected", val);
+          ]]>
+        </setter>
+        <getter>
+          <![CDATA[
+            return document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-container-checkbox").
+                 getAttribute("childselected");
+          ]]>
+        </getter>
+      </property>
+
+      <!-- Container collapsed property. -->
+      <property name="collapsed" >
+        <setter>
+          <![CDATA[
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-container-box").hidden = val;
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-container-twisty").
+                setAttribute("open", !val);
+          ]]>
+        </setter>
+        <getter>
+          <![CDATA[
+            return document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-container-box").hidden;
+          ]]>
+        </getter>
+      </property>
+
+      <!-- Constructor -->
+      <constructor>
+        <![CDATA[
+          // XXX: platform specific code
+          var utilityService =
+            Components.classes["@glaxstar.org/common/utility-service;1"].
+              getService(Components.interfaces.gsIUtilityService);
+          var platform = utilityService.getOperatingSystem();
+
+          if (platform == Components.interfaces.gsIUtilityService.OS_MAC) {
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-container-twisty").
+                setAttribute("gsdiggplatform", "mac");
+          }
+        ]]>
+      </constructor>
+
+      <!--
+        - Handles the focus, blur and click event.
+        - @param aEvent the event object
+        - @param aValue true if its focus, false otherwise
+        -->
+      <method name="_handleFocus">
+        <parameter name="aEvent" />
+        <parameter name="aValue" />
+        <body>
+          <![CDATA[
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-container-row").
+                setAttribute("gsdiggselected", aValue);
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-container-checkbox").focus();
+
+            aEvent.stopPropagation();
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Handles the key press event with up key.
+        - @param aEvent the event object
+        -->
+      <method name="_moveUp">
+        <parameter name="aEvent"/>
+        <body>
+          <![CDATA[
+            if (this.previousSibling) {
+              if (this.previousSibling.hasChildNodes() &&
+                  !this.previousSibling.collapsed) {
+                this.previousSibling.lastChild.focus();
+                this.parentNode.scrollToElement(this.previousSibling.lastChild);
+              } else {
+                this.previousSibling.focus();
+                this.parentNode.scrollToElement(this.previousSibling);
+              }
+            }
+
+            aEvent.stopPropagation();
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Handles the key press event with down key.
+        - @param aEvent the event object
+        -->
+      <method name="_moveDown">
+        <parameter name="aEvent"/>
+        <body>
+          <![CDATA[
+            var container = document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-container-box");
+
+            if (this.hasChildNodes() && !this.collapsed) {
+              this.firstChild.focus();
+              this.parentNode.scrollToElement(this.firstChild);
+            } else {
+              if (this.nextSibling) {
+                this.nextSibling.focus();
+                this.parentNode.scrollToElement(this.nextSibling);
+              }
+            }
+
+            aEvent.stopPropagation();
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Collpases a container .
+        -->
+      <method name="collapseContainer">
+        <body>
+          <![CDATA[
+            this.collapsed = true;
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Expands a container .
+        -->
+      <method name="expandContainer">
+        <body>
+          <![CDATA[
+            this.collapsed = false;
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - toggles the container .
+        -->
+      <method name="toggleContainer">
+        <body>
+          <![CDATA[
+            this.collapsed = !this.collapsed;
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Adds a topic to the container tree.
+        - @param aTopicDTO the topic to be added.
+        -->
+      <method name="addTopic">
+        <parameter name="aTopicDTO" />
+        <body>
+          <![CDATA[
+            var topic = document.createElement("gsdiggtreetopic");
+
+            this.appendChild(topic);
+            topic.topicDTO = aTopicDTO;
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Gets the list of selected topics
+        - @return the list of selected topics
+        -->
+      <method name="getSelectedTopicList">
+        <body>
+          <![CDATA[
+            var topicList = this.childNodes;
+            var selectedList = "";
+
+            for (var i = 0; i < topicList.length; i++) {
+              if (topicList[i].selected) {
+                selectedList += "\"" + topicList[i].topicDTO.shortName + "\",";
+              }
+            }
+
+            return selectedList;
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Sets the value of the container child topics depending on the
+        - selection.
+        -->
+      <method name="selectCheckbox">
+        <body>
+          <![CDATA[
+            var topicList = this.childNodes;
+
+            for (var i = 0; i < topicList.length; i++) {
+              topicList[i].selected = this.selected;
+            }
+
+            this.parentNode.updatePreferences();
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Finds a topic element in the container.
+        - @param aTopicName the name of the topic
+        - @return topic
+        -->
+      <method name="findTopic">
+        <parameter name="aTopicName" />
+        <body>
+          <![CDATA[
+            var topicList = this.childNodes;
+            var topic = null;
+
+            for (var i = 0; i < topicList.length; i++) {
+              if (aTopicName == topicList[i].topicDTO.shortName) {
+                topic = topicList[i];
+                break;
+              }
+            }
+
+            return topic;
+          ]]>
+        </body>
+      </method>
+
+    </implementation>
+  </binding>
+
+  <!-- Tree topic -->
+  <binding id="gs-digg-tree-topic">
+    <resources>
+      <stylesheet src="chrome://digg/skin/common/tree/gsDiggTree.css"/>
+    </resources>
+
+    <handlers>
+      <handler event="focus" action="_handleFocus(event, true);"/>
+      <handler event="blur"  action="_handleFocus(event, false);"/>
+      <handler event="click"  action="_handleFocus(event, true);"/>
+      <handler event="keypress" keycode="VK_UP" action="_moveUp(event);"/>
+      <handler event="keypress" keycode="VK_DOWN" action="_moveDown(event);"/>
+      <handler event="keypress" keycode="VK_LEFT" action="_moveLeft(event)"/>
+    </handlers>
+
+    <content>
+      <xul:hbox flex="1" anonid="gs-digg-tree-topic-box"
+        class="gs-digg-tree-topic-box">
+        <xul:spacer class="gs-digg-tree-topic-space"/>
+        <xul:gsdiggcheckbox anonid="gs-digg-tree-topic-checkbox"
+          oncommand="selectCheckbox();"/>
+      </xul:hbox>
+    </content>
+
+    <implementation>
+      <!-- Topic DTO field. -->
+      <field name="_topicDTO">null</field>
+
+      <!-- Topic DTO property. -->
+      <property name="topicDTO" >
+        <setter>
+          <![CDATA[
+            this._topicDTO = val;
+
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-topic-checkbox").
+                label = this._topicDTO.name;
+          ]]>
+        </setter>
+        <getter>
+          <![CDATA[
+            return this._topicDTO;
+          ]]>
+        </getter>
+      </property>
+
+      <!-- Topic selected property. -->
+      <property name="selected" >
+        <setter>
+          <![CDATA[
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-topic-checkbox").checked = val;
+          ]]>
+        </setter>
+        <getter>
+          <![CDATA[
+            return document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-topic-checkbox").checked;
+          ]]>
+        </getter>
+      </property>
+
+      <!--
+        - Handles the focus, blur and click event.
+        - @param aEvent the event object
+        - @param aValue true if its focus, false otherwise
+        -->
+      <method name="_handleFocus">
+        <parameter name="aEvent" />
+        <parameter name="aValue" />
+        <body>
+          <![CDATA[
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-topic-box").
+                setAttribute("gsdiggselected", aValue);
+            document.getAnonymousElementByAttribute(
+              this, "anonid", "gs-digg-tree-topic-checkbox").focus();
+
+            aEvent.stopPropagation();
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Handles the key press event with up key.
+        - @param aEvent the event object
+        -->
+      <method name="_moveUp">
+        <parameter name="aEvent"/>
+        <body>
+          <![CDATA[
+            var tree = this.parentNode.parentNode;
+
+            if (this.previousSibling) {
+              this.previousSibling.focus();
+              tree.scrollToElement(this.previousSibling);
+            } else {
+              this.parentNode.focus();
+              tree.scrollToElement(this.parentNode);
+            }
+
+            aEvent.stopPropagation();
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Handles the key press event with down key.
+        - @param aEvent the event object
+        -->
+      <method name="_moveDown">
+        <parameter name="aEvent"/>
+        <body>
+          <![CDATA[
+            var tree = this.parentNode.parentNode;
+
+            if (this.nextSibling) {
+              this.nextSibling.focus();
+              tree.scrollToElement(this.nextSibling);
+            } else {
+              if (this.parentNode.nextSibling) {
+                this.parentNode.nextSibling.focus();
+                tree.scrollToElement(this.parentNode.nextSibling);
+              }
+            }
+
+            aEvent.stopPropagation();
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Handles the key press event with left key.
+        - @param aEvent the event object
+        -->
+      <method name="_moveLeft">
+        <parameter name="aEvent"/>
+        <body>
+          <![CDATA[
+            this.parentNode.collapseContainer();
+            this.parentNode.focus();
+
+            aEvent.stopPropagation();
+          ]]>
+        </body>
+      </method>
+
+      <!--
+        - Check the container father selected state depending on the topic
+        - selection.
+        -->
+      <method name="selectCheckbox">
+        <body>
+          <![CDATA[
+            var topicList = this.parentNode.childNodes;
+             var selectedFlag = false;
+
+            if (this.selected) {
+              selectedFlag = true;
+              for (var i = 0; i < topicList.length; i++) {
+                if (!topicList[i].selected) {
+                  selectedFlag = false;
+                  break;
+                }
+              }
+
+              if (selectedFlag) {
+                this.parentNode.selected = true;
+                this.parentNode.childSelected = false;
+              } else {
+                this.parentNode.childSelected = true;
+              }
+            } else {
+              this.parentNode.selected = false;
+
+              selectedFlag = false;
+              for (var i = 0; i < topicList.length; i++) {
+                if (topicList[i].selected) {
+                  selectedFlag = true;
+                  break;
+                }
+              }
+
+              if (selectedFlag) {
+                this.parentNode.childSelected = true;
+              } else {
+                this.parentNode.childSelected = false;
+              }
+            }
+
+            this.parentNode.parentNode.updatePreferences();
+          ]]>
+        </body>
+      </method>
+
+    </implementation>
+  </binding>
+
+</bindings>

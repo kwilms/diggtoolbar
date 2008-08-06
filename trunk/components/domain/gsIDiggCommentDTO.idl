@@ -1,0 +1,62 @@
+/***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****/
+
+#include "nsISupports.idl"
+
+interface gsICMTransferObject;
+
+/**
+ * Comment DTO
+ * Stores comment info
+ */
+[scriptable, uuid(15581382-3B51-4773-92FE-FB62963A53B1)]
+interface gsIDiggCommentDTO : nsISupports
+{
+  /* Id of the comment */
+  attribute unsigned long commentId;
+  /* Date in which the comment was made */
+  attribute unsigned long date;
+  /* Id of the story the comment belongs to */
+  attribute AUTF8String storyId;
+  /* User name of the user who made the comment */
+  attribute AUTF8String userName;
+  /* Content of the comment */
+  attribute AUTF8String content;
+  /* Number of thumbs up */
+  attribute unsigned short up;
+  /* Number of thumbs down */
+  attribute unsigned short down;
+  /* Number of replies */
+  attribute unsigned short replies;
+  /* Id of the comment thread root */
+  attribute unsigned long threadRootId;
+
+  /**
+   * Populates the commentDTO with the information contained in the
+   * gsICMTransferObject.
+   * @param aCMTransferObject the transfer object to extract the comment data.
+   */
+  void populateFromTO(in gsICMTransferObject aCMTransferObject);
+};

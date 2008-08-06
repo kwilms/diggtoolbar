@@ -1,0 +1,71 @@
+/***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****/
+
+.checkbox-icon-box {
+  -moz-box-align: center;
+  -moz-box-pack: center;
+  padding-left: 3px;
+}
+
+.checkbox-label-box {
+  -moz-box-align: center;
+  -moz-box-pack: center;
+}
+
+.checkbox-icon {
+  margin-right: 2px;
+}
+
+.checkbox-label {
+  margin: 0px !important;
+}
+
+.checkbox-check {
+  list-style-image: url("chrome://digg/skin/common/checkbox/checkboxWindows.png");
+  -moz-image-region: rect(0px, 16px, 18px, 0px);
+  width: 16px !important;
+  height: 18px !important;
+}
+.checkbox-check[gsdiggplatform="windows"] {
+  list-style-image: url("chrome://digg/skin/common/checkbox/checkboxWindows.png");
+}
+.checkbox-check[gsdiggplatform="mac"] {
+  list-style-image: url("chrome://digg/skin/common/checkbox/checkboxMac.png");
+}
+.checkbox-check[gsdiggplatform="linux"] {
+  list-style-image: url("chrome://digg/skin/common/checkbox/checkboxLinux.png");
+}
+.checkbox-check[disabled="true"] {
+  -moz-image-region: rect(0px, 32px, 18px, 16px);
+}
+.checkbox-check[checked="true"] {
+  -moz-image-region: rect(0px, 48px, 18px, 32px);
+}
+.checkbox-check[checked="true"][disabled="true"] {
+  -moz-image-region: rect(0px, 64px, 18px, 48px);
+}
+.checkbox-check[childselected="true"] {
+  -moz-image-region: rect(0px, 80px, 18px, 64px);
+}

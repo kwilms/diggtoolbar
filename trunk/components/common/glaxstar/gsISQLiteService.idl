@@ -1,0 +1,58 @@
+/**
+ * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+interface nsIArray;
+interface mozIStorageStatement;
+
+/**
+ * SQLite service
+ * Manage sqlite operations
+ */
+[scriptable, uuid(0add70e0-f9df-11dc-95ff-0800200c9a66)]
+interface gsISQLiteService : nsISupports
+{
+  /**
+   * Initializes the database file values.
+   * @param aDBFileFolder The name of the folder that contains the DB file.
+   * @param aDBFileName The name of the database file.
+   */
+  void initialize(in AUTF8String aDBFileFolder, in AUTF8String aDBFileName);
+
+  /**
+   * Creates a query statement based on the given string.
+   * @param aQueryString The query string.
+   * @return The query statement.
+   */
+  mozIStorageStatement createStatement(in AUTF8String aQueryString);
+
+  /**
+   * Executes a non query statement.
+   * @param aQueryStatement The query statement to be executed.
+   * @return The last inserted row id.
+   */
+  PRUint32 executeNonQuery(in mozIStorageStatement aQueryStatement);
+
+  /**
+   * Executes a query statement.
+   * @param aQueryStatement The query statement to be executed.
+   * @return The resulting set from the query.
+   */
+  nsIArray executeQuery(in mozIStorageStatement aQueryStatement);
+
+  /**
+   * Checks if a column exists in the specified table.
+   * @param aTable The table where to look for the column.
+   * @param aColumn The column to look for in the table.
+   * @return True if exists, false otherwise.
+   */
+  boolean existsColumnInTable(in AUTF8String aTable, in AUTF8String aColumn);
+
+  /**
+   * Closes the database connection. Note that this won't work as expected in
+   * versions before Firefox 3.
+   */
+  void closeConnection();
+};

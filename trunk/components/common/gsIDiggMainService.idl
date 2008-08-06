@@ -1,0 +1,55 @@
+/***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****/
+
+#include "nsISupports.idl"
+interface gsIDiggLoadHandler;
+
+/**
+ * Main Digg service. Performs basic actions using the Digg API.
+ */
+[scriptable, uuid(35fad0c0-1162-11dd-bd0b-0800200c9a66)]
+interface gsIDiggMainService : nsISupports
+{
+  /**
+   * Gets a story object from its link URL using the API.
+   * @param aURL The URL used to obtain the story.
+   * @param aLoadHandler The caller's load handler.
+   */
+  void getStoryByURL(in AUTF8String aURL, in gsIDiggLoadHandler aLoadHandler);
+
+  /**
+   * Gets a story object from its link title using the API.
+   * @param aTitle The clean title used to obtain the story.
+   * @param aLoadHandler The caller's load handler.
+   */
+  void getStoryByTitle(in AUTF8String aTitle,
+    in gsIDiggLoadHandler aLoadHandler);
+
+  /**
+   * Obtains the array of containers, each containing an array of topics inside.
+   * @param aLoadHandler The caller's load handler.
+   */
+  void listContainers(in gsIDiggLoadHandler aLoadHandler);
+};

@@ -1,0 +1,38 @@
+/**
+ * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+interface gsICMManifest;
+interface gsICMLoadHandler;
+interface gsICMErrorHandler;
+
+/**
+ * This is the main communication service, from which the specification and
+ * implementation objects of a given API are obtained.
+ */
+[scriptable, uuid(085A4744-A335-4DD1-8005-30FCD527524F)]
+interface gsICommunicationService : nsISupports
+{
+  /**
+   * Obtains an API manifest from the given URL.
+   * @param aLoadHandler the load handler for the manifest call.
+   * @param aErrorHandler the error handler for the manifest call.
+   * @param aURL the URL to get the manifest from.
+   * @throws Exception if any of the arguments is invalid, or the call fails
+   * before it's sent.
+   */
+  void getManifest(
+    in AUTF8String aURL, in gsICMLoadHandler aLoadHandler,
+    in gsICMErrorHandler aErrorHandler);
+
+  /**
+   * Creates an object that implements the API described in the given manifest.
+   * @param aManifest the manifest object used to generate the implementation
+   * object.
+   * @return Implementation object for the API described in the manifest.
+   * @throws Exception if the manifest is invalid.
+   */
+  nsISupports implementManifest(in gsICMManifest aManifest);
+};

@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+
+<!--
+***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****
+-->
+
+<?xml-stylesheet type="text/css" href="chrome://global/skin/" ?>
+<?xml-stylesheet type="text/css"
+  href="chrome://browser/skin/preferences/preferences.css" ?>
+<?xml-stylesheet type="text/css"
+  href="chrome://digg/skin/settings/gsDiggSettingsWindow.css" ?>
+
+<!DOCTYPE prefwindow [
+  <!ENTITY % gsDiggSettingsDTD SYSTEM
+    "chrome://digg/locale/settings/gsDiggSettingsWindow.dtd" >
+  %gsDiggSettingsDTD;
+]>
+
+<prefwindow id="gs-digg-settings-window"
+  title="&gs.digg.settings.window.title;"
+  buttons="accept, cancel"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <prefpane>
+    <preferences>
+      <preference id="gs-digg-settings-notify-friendsActivity"
+        name="extensions.digg.notify.friendsActivity" type="bool"/>
+      <preference id="gs-digg-settings-info-username"
+        name="extensions.digg.username" type="string"/>
+      <preference id="gs-digg-settings-notification-autohide"
+        name="extensions.digg.notification.autohide" type="int" />
+      <preference id="gs-digg-settings-open-links"
+        name="extensions.digg.open.links" type="int" />
+      <preference id="gs-digg-settings-notification-type"
+        name="extensions.digg.notification.type" type="int"/>
+    </preferences>
+
+    <groupbox>
+      <caption>
+        <label value="&gs.digg.settings.recentlyPopular.label;"/>
+      </caption>
+      <hbox id="gs-digg-notifications-box" />
+    </groupbox>
+
+    <spacer class="gs-digg-settings-spacer" />
+
+    <groupbox>
+      <caption>
+        <checkbox id="gs-digg-settings-friendsActivity-checkbox"
+          label="&gs.digg.settings.friendsActivity.label;"
+          preference="gs-digg-settings-notify-friendsActivity"
+          oncommand="gsDiggSettingsWindow.onFriendsActivityChange()" />
+      </caption>
+      <hbox align="center">
+        <label value="&gs.digg.settings.username.textbox.label;"/>
+        <textbox id="gs-digg-settings-username-textbox"
+          preference="gs-digg-settings-info-username" size="25"/>
+        <label value="&gs.digg.settings.username.comment.label;"
+          class="gs-digg-settings-username-comment" />
+      </hbox>
+    </groupbox>
+
+    <spacer class="gs-digg-settings-spacer" />
+
+    <grid>
+      <columns>
+        <column flex="1"/>
+        <column flex="1"/>
+        <column flex="1"/>
+      </columns>
+      <rows>
+        <row>
+          <label value="&gs.digg.settings.autohide.label;"/>
+          <label value="&gs.digg.settings.openLinks.label;"/>
+          <label value="&gs.digg.settings.notificationType.label;"/>
+        </row>
+        <row>
+          <menulist preference="gs-digg-settings-notification-autohide">
+            <menupopup>
+              <menuitem value="0"
+                label="&gs.digg.settings.autohide.type1.label;"/>
+              <menuitem value="1"
+                label="&gs.digg.settings.autohide.type2.label;"/>
+              <menuitem value="2"
+                label="&gs.digg.settings.autohide.type3.label;"/>
+              <menuitem value="3"
+                label="&gs.digg.settings.autohide.type4.label;"/>
+            </menupopup>
+          </menulist>
+          <menulist preference="gs-digg-settings-open-links">
+            <menupopup>
+              <menuitem value="0"
+                label="&gs.digg.settings.openLinks.type1.label;"/>
+              <menuitem value="1"
+                label="&gs.digg.settings.openLinks.type2.label;"/>
+              <menuitem value="2"
+                label="&gs.digg.settings.openLinks.type3.label;"/>
+            </menupopup>
+          </menulist>
+          <menulist preference="gs-digg-settings-notification-type">
+            <menupopup>
+              <menuitem value="0"
+                label="&gs.digg.settings.notificationType.type1.label;"/>
+              <menuitem value="1"
+                label="&gs.digg.settings.notificationType.type2.label;"/>
+              <menuitem value="2"
+                label="&gs.digg.settings.notificationType.type3.label;"/>
+            </menupopup>
+          </menulist>
+        </row>
+      </rows>
+    </grid>
+
+    <spacer class="gs-digg-settings-spacer" />
+    <spacer class="gs-digg-settings-spacer" />
+
+  </prefpane>
+
+  <script type="application/x-javascript"
+    src="chrome://digg/content/settings/gsDiggSettingsWindow.js" />
+
+</prefwindow>

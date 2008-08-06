@@ -1,0 +1,50 @@
+/***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****/
+
+#include "nsISupports.idl"
+
+/**
+ * Event Notifier. Uses the event manager to check for new events once every
+ * certain amount of time, and sends out notifications using an observer topic.
+ */
+[scriptable, uuid(AF4F3F2B-CA0E-4BFC-BF9D-20CCB39D768E)]
+interface gsIDiggEventNotifier : nsISupports
+{
+  /* Observer topic used to notify when new events are available */
+  readonly attribute AUTF8String OBSERVER_TOPIC_NEW_EVENTS;
+
+  /**
+   * Initialize the timer for notifications. This method is required to delay
+   * the timer startup until the startup service initializes the API.
+   */
+  void initialize();
+
+  /**
+   * Uses the event manager to check for new events. If there are, in fact, new
+   * events available then the "new events" topic is fired. Only executes if
+   * the snooze preference is set to false.
+   */
+  void checkForEvents();
+};

@@ -1,0 +1,82 @@
+/***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****/
+#gs-digg-toolbar {
+  height: 28px;
+  -moz-box-align: center;
+}
+#gs-digg-toolbar toolbarseparator {
+  height: 26px !important;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+#gs-digg-toolbar toolbarbutton,
+#gs-digg-toolbar toolbaritem {
+  -moz-box-align: center;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+#gs-digg-toolbar-options-button {
+  list-style-image: url("chrome://digg/skin/toolbar/button-options.png");
+  margin-left: 4px;
+  width: 48px;
+}
+
+#gs-digg-toolbar-submit-button > image {
+  list-style-image: url("chrome://digg/skin/toolbar/button-submit.png");
+}
+
+#gs-digg-toolbar-diggs-count {
+  margin-left: 0px;
+}
+
+#gs-digg-toolbar-diggs-button {
+  list-style-image: url("chrome://digg/skin/toolbar/button-digg.png");
+}
+#gs-digg-toolbar-diggs-button[dugg="true"] {
+  list-style-image: url("chrome://digg/skin/toolbar/button-dugg.png");
+}
+
+#gs-digg-toolbar-comments-image {
+  list-style-image: url("chrome://digg/skin/toolbar/button-comment.png");
+}
+
+#gs-digg-toolbar-snooze-button {
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  margin-right: 8px;
+  margin-left: 8px;
+  list-style-image: url("chrome://digg/skin/toolbar/button-pause.png");
+}
+#gs-digg-toolbar-snooze-button[checked="true"] {
+  opacity: 0.7;
+  border-top: thin solid #666;
+  border-left: thin solid #666;
+  border-bottom: thin solid #EEE;
+  border-right: thin solid #EEE;
+  -moz-border-radius: 3px;
+}

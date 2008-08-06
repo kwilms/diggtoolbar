@@ -1,0 +1,105 @@
+/***** BEGIN LICENSE BLOCK *****
+
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations
+under the License.
+
+The Original Code is GLaxstar Ltd code.
+
+The Initial Developer of the Original Code is Glaxstar Ltd.
+Portions created by the Initial Developer are
+Copyright (C) 2008 Digg Inc. All Rights Reserved.
+
+Contributor(s):
+  Jose Enrique Bolanos <jose@glaxstar.com>
+  Andres Hernandez <andres@glaxstar.com>
+  Erik van Eykelen <erik@glaxstar.com>
+
+***** END LICENSE BLOCK *****/
+
+#include "nsISupports.idl"
+interface gsIDiggStoryDTO;
+interface gsIDiggCommentDTO;
+interface gsIDiggAdminMessageDTO;
+
+/**
+ * Digg Event object. Stores information common to any Digg event (story,
+ * friend activity).
+ */
+[scriptable, uuid(AC27F515-8BA2-405D-85F3-AFC0307F4C17)]
+interface gsIDiggEvent : nsISupports
+{
+  /* Value for type "popular story" */
+  const unsigned short EVENT_TYPE_STORY = 1;
+  /* Value for type "friend submission" */
+  const unsigned short EVENT_TYPE_FRIEND_SUBMISSION = 2;
+  /* Value for type "friend commented something" */
+  const unsigned short EVENT_TYPE_FRIEND_COMMENT = 3;
+  /* Value for type "friend dugg something" */
+  const unsigned short EVENT_TYPE_FRIEND_DIGG = 4;
+  /* Value for type "administration message" */
+  const unsigned short EVENT_TYPE_ADMIN_MESSAGE = 5;
+
+  /* Id of the event */
+  attribute AUTF8String id;
+  /* Type of the event */
+  attribute unsigned short type;
+  /* Target url to be opened by the event */
+  attribute AUTF8String href;
+  /* The event direct link URL */
+  attribute AUTF8String link;
+  /* Domain of the link URL */
+  readonly attribute AUTF8String domain;
+  /* Date of the event */
+  attribute unsigned long date;
+  /* Event title */
+  attribute AUTF8String title;
+  /* Event description */
+  attribute AUTF8String description;
+  /* Event story topic */
+  attribute AUTF8String topic;
+  /* Event story media */
+  attribute AUTF8String media;
+  /* URL of the event's image */
+  attribute AUTF8String imageURL;
+  /* User name of the user who submitted the story */
+  attribute AUTF8String user;
+  /* Number of diggs */
+  attribute short diggs;
+  /* Number of comments */
+  attribute short comments;
+  /* Friend user names (comma-separated) related with the event */
+  attribute AUTF8String friends;
+
+  /**
+   * Populates the event object with the information from a story.
+   * @param aStoryDTO The storyDTO object used to populate the event.
+   * @param aEventType The type of this event object.
+   * @throws Exception if aStoryDTO is invalid.
+   */
+  void populateFromStory(
+    in gsIDiggStoryDTO aStoryDTO, in unsigned short aEventType);
+
+  /**
+   * Populates the event object with the information from a story.
+   * @param aStoryDTO The storyDTO object used to populate the event.
+   * @param aEventType The type of this event object.
+   * @throws Exception if either aCommentDTO or aStoryDTO are invalid.
+   */
+  void populateFromStoryComment(
+    in gsIDiggStoryDTO aStoryDTO, in gsIDiggCommentDTO aCommentDTO);
+
+  /**
+   * Populates the event object with the information from an administration
+   * message.
+   * @param aMessageDTO The AdminMessageDTO object used to populate the event.
+   * @throws Exception if aMessageDTO is invalid.
+   */
+  void populateFromAdminMessage(in gsIDiggAdminMessageDTO aMessageDTO);
+};

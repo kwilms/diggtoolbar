@@ -1,0 +1,20 @@
+/**
+ * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+interface gsICMError;
+
+/**
+ * Error handler for API calls.
+ */
+[scriptable, uuid(FCC2D955-BF0D-429F-A89E-C678279AF08A)]
+interface gsICMErrorHandler : nsISupports
+{
+  /**
+   * Handles the error event for an API request.
+   * @param aError the resulting error from the response.
+   */
+   void handleError(in gsICMError aError);
+};
