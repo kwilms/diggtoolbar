@@ -1,25 +1,30 @@
 /***** BEGIN LICENSE BLOCK *****
 
-The contents of this file are subject to the Mozilla Public License
-Version 1.1 (the "License"); you may not use this file except in
-compliance with the License. You may obtain a copy of the License at
-http://www.mozilla.org/MPL/
+Copyright (c) 2008, Digg Inc.
+All rights reserved.
 
-Software distributed under the License is distributed on an "AS IS"
-basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
-License for the specific language governing rights and limitations
-under the License.
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
 
-The Original Code is GLaxstar Ltd code.
+* Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation and/or
+other materials provided with the distribution.
+* Neither the name of Digg Inc. nor the names of its contributors may be used to
+endorse or promote products derived from this software without specific prior
+written permission.
 
-The Initial Developer of the Original Code is Glaxstar Ltd.
-Portions created by the Initial Developer are
-Copyright (C) 2008 Digg Inc. All Rights Reserved.
-
-Contributor(s):
-  Jose Enrique Bolanos <jose@glaxstar.com>
-  Andres Hernandez <andres@glaxstar.com>
-  Erik van Eykelen <erik@glaxstar.com>
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ***** END LICENSE BLOCK *****/
 
@@ -107,6 +112,9 @@ var gsDiggToolbar = {
       document.getElementById('gs-digg-toolbar-broadcaster-newStory');
     this._bcExistingStory =
       document.getElementById('gs-digg-toolbar-broadcaster-existingStory');
+
+    this._bcNewStory.setAttribute("collapsed", true);
+    this._bcExistingStory.setAttribute("collapsed", true);
 
     // XXX: Enfore our toolbar set of controls
     window.setTimeout(function() { gsDiggToolbar._enforceToolbarSet(); }, 0);
@@ -204,27 +212,7 @@ var gsDiggToolbar = {
   _isValidDiggURI : function(aURI) {
     this._logService.trace("gsDiggToolbar._isValidDiggURI");
 
-    return (("digg.com" == aURI.host) || ("www.digg.com" == aURI.host));
-  },
-
-  /**
-   * Gets the clean title from a digg URL.
-   * @param aURI the URI to be verified
-   * @return url clean title
-   */
-  _getDiggURLTitle : function(aURI) {
-    this._logService.trace("gsDiggToolbar._getDiggURLTitle");
-
-    var urlTitle = null;
-
-    if (this._isValidDiggURI(aURI)) {
-      var lastIndexOf = aURI.path.lastIndexOf("/");
-      if (lastIndexOf > 1) {
-        urlTitle = aURI.path.substring(lastIndexOf + 1);
-      }
-    }
-
-    return urlTitle;
+    return (aURI.host.match(/digg\.com/gi));
   },
 
   /**
@@ -238,16 +226,11 @@ var gsDiggToolbar = {
     var urlURI = this._getURI(aURL);
 
     if (this._isValidURI(urlURI)) {
-
       if (this._isValidDiggURI(urlURI)) {
-        // get story object by its title because a Digg permalink page is loaded
-        //this._getStoryByTitle(aURL, urlURI);
-        // TODO: getStoryByTitle is disabled for now. Remove if not needed later
         this._toolbarState = GS_DIGG_TOOLBAR_STATE_EMPTY;
       } else {
         this._getStoryByURL(aURL);
       }
-
     } else {
       this._toolbarState = GS_DIGG_TOOLBAR_STATE_EMPTY;
     }
@@ -275,35 +258,7 @@ var gsDiggToolbar = {
   },
 
   /**
-   * Gets a story object from its link title calling the API.
-   * @param aURL The URL used to obtain the story.
-   * @param aURI The uri URL used to obtain the story.
-   */
-  _getStoryByTitle : function(aURL, aURI) {
-    this._logService.trace("gsDiggToolbar._getStoryByTitle");
-
-    try {
-      var urlTitle = this._getDiggURLTitle(aURI);
-      if (null != urlTitle) {
-
-        let that = this;
-        this._mainDiggService.getStoryByTitle(
-          urlTitle,
-          { handleLoad: function(aResultCount, aResults) {
-              that._getStoryLoadHandler(aURL, aResultCount, aResults);
-            }
-          });
-      } else {
-        this._toolbarState = GS_DIGG_TOOLBAR_STATE_EMPTY;
-      }
-    } catch(e) {
-      this._toolbarState = GS_DIGG_TOOLBAR_STATE_EMPTY;
-      this._logService.error("gsDiggToolbar._getStoryByTitle: " + e);
-    }
-  },
-
-  /**
-   * Handles the response from the getStoryByURL and getStoryByTitle methods.
+   * Handles the response from the getStoryByURL method.
    * Checks whether the given story object is valid and loads it in the toolbar.
    * @param aURL The story's URL.
    * @param aResultCount The number of objects contained in the response.
@@ -335,8 +290,9 @@ var gsDiggToolbar = {
     this._currentStory = aStoryDTO;
 
     var stringBundle = document.getElementById("gs-digg-toolbar-string-bundle");
-    var diggs = document.getElementById("gs-digg-toolbar-diggs-count");
-    var comments = document.getElementById("gs-digg-toolbar-comments-count");
+    var diggs = document.getElementById("gs-digg-toolbar-broadcaster-diggs");
+    var comments =
+      document.getElementById("gs-digg-toolbar-broadcaster-comments");
 
     if (aStoryDTO.diggs == 1) {
       diggs.setAttribute("value",
