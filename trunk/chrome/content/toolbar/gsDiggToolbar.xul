@@ -3,26 +3,31 @@
 <!--
 ***** BEGIN LICENSE BLOCK *****
 
-The contents of this file are subject to the Mozilla Public License
-Version 1.1 (the "License"); you may not use this file except in
-compliance with the License. You may obtain a copy of the License at
-http://www.mozilla.org/MPL/
+Copyright (c) 2008, Digg Inc.
+All rights reserved.
 
-Software distributed under the License is distributed on an "AS IS"
-basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
-License for the specific language governing rights and limitations
-under the License.
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
 
-The Original Code is GLaxstar Ltd code.
+* Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation and/or
+other materials provided with the distribution.
+* Neither the name of Digg Inc. nor the names of its contributors may be used to
+endorse or promote products derived from this software without specific prior
+written permission.
 
-The Initial Developer of the Original Code is Glaxstar Ltd.
-Portions created by the Initial Developer are
-Copyright (C) 2008 Digg Inc. All Rights Reserved.
-
-Contributor(s):
-  Jose Enrique Bolanos <jose@glaxstar.com>
-  Andres Hernandez <andres@glaxstar.com>
-  Erik van Eykelen <erik@glaxstar.com>
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ***** END LICENSE BLOCK *****
 -->
@@ -49,16 +54,18 @@ Contributor(s):
   </stringbundleset>
 
   <broadcasterset>
-    <broadcaster id="gs-digg-toolbar-broadcaster-newStory"
-      collapsed="true" />
-    <broadcaster id="gs-digg-toolbar-broadcaster-existingStory"
-      collapsed="true"/>
+    <broadcaster id="gs-digg-toolbar-broadcaster-newStory"/>
+    <broadcaster id="gs-digg-toolbar-broadcaster-existingStory"/>
+    <broadcaster id="gs-digg-toolbar-broadcaster-diggs" />
+    <broadcaster id="gs-digg-toolbar-broadcaster-comments" />
   </broadcasterset>
 
   <toolbarpalette id="BrowserToolbarPalette">
 
     <toolbarbutton type="menu-button"
       id="gs-digg-toolbar-options-button"
+      class="gs-digg-toolbar-element"
+      label="&gs.digg.toolbar.options.label;"
       tooltiptext="&gs.digg.toolbar.options.tooltip;"
       oncommand="if (event.target == this) { gsDiggMain.openURL('http://www.digg.com', GS_DIGG_TRACKING_CODE_HOME); }">
 
@@ -75,6 +82,7 @@ Contributor(s):
     </toolbarbutton>
 
     <toolbaritem id="gs-digg-toolbar-submit-button"
+      class="gs-digg-toolbar-element"
       tooltiptext="&gs.digg.toolbar.submit.tooltip;"
       observes="gs-digg-toolbar-broadcaster-newStory"
       onclick="gsDiggToolbar.submitStory(GS_DIGG_TRACKING_CODE_TOOLBAR_SUBMIT)">
@@ -82,8 +90,11 @@ Contributor(s):
     </toolbaritem>
 
     <toolbaritem id="gs-digg-toolbar-diggs-item"
+      class="gs-digg-toolbar-element"
       observes="gs-digg-toolbar-broadcaster-existingStory">
       <label id="gs-digg-toolbar-diggs-count"
+        observes="gs-digg-toolbar-broadcaster-diggs"
+        value="&gs.digg.toolbar.diggs.defaultText;"
         onclick="gsDiggToolbar.openStory(GS_DIGG_TRACKING_CODE_TOOLBAR_DIGGS)"/>
       <image id="gs-digg-toolbar-diggs-button"
         tooltiptext="&gs.digg.toolbar.diggit.tooltip;"
@@ -94,14 +105,18 @@ Contributor(s):
       observes="gs-digg-toolbar-broadcaster-existingStory"/>
 
     <toolbaritem id="gs-digg-toolbar-comments-item"
+      class="gs-digg-toolbar-element"
       observes="gs-digg-toolbar-broadcaster-existingStory"
       onclick="gsDiggToolbar.openStory(GS_DIGG_TRACKING_CODE_TOOLBAR_COMMENTS)">
       <image id="gs-digg-toolbar-comments-image"/>
-      <label id="gs-digg-toolbar-comments-count"/>
+      <label id="gs-digg-toolbar-comments-count"
+        observes="gs-digg-toolbar-broadcaster-comments"
+        value="&gs.digg.toolbar.comments.defaultText;"/>
     </toolbaritem>
 
     <toolbarbutton type="checkbox" persist="checked"
       id="gs-digg-toolbar-snooze-button"
+      class="gs-digg-toolbar-element"
       observes="gs-digg-snooze-broadcaster"
       oncommand="gsDiggMain.toggleSnooze()"/>
 
@@ -110,7 +125,7 @@ Contributor(s):
   <toolbox id="navigator-toolbox">
     <toolbar id="gs-digg-toolbar" toolbarname="&gs.digg.toolbar.name;"
       mode="icons" class="chromeclass-toolbar" customizable="true"
-      collapsed="false" persist="collapsed"
+      collapsed="false" persist="collapsed,currentset"
       defaultset="gs-digg-toolbar-options-button,separator,gs-digg-toolbar-submit-button,gs-digg-toolbar-diggs-item,gs-digg-toolbar-separator-existingStory,gs-digg-toolbar-comments-item,spring,gs-digg-toolbar-snooze-button" >
     </toolbar>
   </toolbox>
