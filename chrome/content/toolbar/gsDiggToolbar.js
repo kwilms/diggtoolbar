@@ -28,12 +28,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ***** END LICENSE BLOCK *****/
 
-// Digg toolbar control set
-const GS_DIGG_TOOLBAR_SET =
-  "gs-digg-toolbar-options-button,separator,gs-digg-toolbar-submit-button," +
-  "gs-digg-toolbar-diggs-item,gs-digg-toolbar-separator-existingStory," +
-  "gs-digg-toolbar-comments-item,spring,gs-digg-toolbar-snooze-button";
-
 // Digg submit URL
 const GS_DIGG_SUBMIT_PLACEHOLDER_URL = "?PLACEHOLDER_URL?";
 const GS_DIGG_SUBMIT_PLACEHOLDER_TITLE = "?PLACEHOLDER_TITLE?";
@@ -115,9 +109,6 @@ var gsDiggToolbar = {
 
     this._bcNewStory.setAttribute("collapsed", true);
     this._bcExistingStory.setAttribute("collapsed", true);
-
-    // XXX: Enfore our toolbar set of controls
-    window.setTimeout(function() { gsDiggToolbar._enforceToolbarSet(); }, 0);
   },
 
   /**
@@ -125,20 +116,6 @@ var gsDiggToolbar = {
    */
   uninit : function() {
     this._logService.debug("gsDiggToolbar.uninit");
-  },
-
-  /**
-   * Enforces our desired toolbar control set. This is a required hack because
-   * Firefox converts our custom toolbarseparator controls into regular ones.
-   */
-  _enforceToolbarSet : function() {
-    this._logService.trace("gsDiggToolbar._enforceToolbarSet");
-
-    let toolbar = document.getElementById("gs-digg-toolbar");
-    toolbar.setAttribute("currentset", GS_DIGG_TOOLBAR_SET);
-    toolbar.currentSet = GS_DIGG_TOOLBAR_SET;
-    toolbar.ownerDocument.persist(toolbar.id, "currentset");
-    BrowserToolboxCustomizeDone(true);
   },
 
   /**
