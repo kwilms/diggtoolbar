@@ -73,13 +73,15 @@ var gsDiggMainService = {
   },
 
   /**
-   * Gets a story object from a result from the API.
+   * Gets a story object from a result from the API. If more than one story is
+   * contained in the result, the one with the highest Digg count is chosen.
    * @param aResult The API result element.
-   * @return storyDTO the story DTO result.
+   * @return The story DTO, NULL if none found.
    */
   _getStoryDTOFromResult : function(aResult) {
     this._logService.trace("gsDiggMainService._getStoryDTOFromResult");
 
+    var bestStory = null;
     var storyDTO = null;
     var storyArray = new Object();
     var storyCount = new Object();
@@ -87,14 +89,18 @@ var gsDiggMainService = {
 
     storiesTO.getObjectArray(storyCount, storyArray);
 
-    if (1 <= storyCount.value) {
+    for (var i = storyCount.value - 1; 0 <= i; i--) {
       storyDTO =
         Cc["@glaxstar.org/digg/story-dto;1"].
           createInstance(Ci.gsIDiggStoryDTO);
-      storyDTO.populateFromTO(storyArray.value[0]);
+      storyDTO.populateFromTO(storyArray.value[i]);
+
+      if (null == bestStory || bestStory.diggs < storyDTO.diggs) {
+        bestStory = storyDTO;
+      }
     }
 
-    return storyDTO;
+    return bestStory;
   },
 
   /**
