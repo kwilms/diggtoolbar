@@ -45,7 +45,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <!-- Notification panel popup (inner and outer) -->
   <window id="main-window">
-    <panel id="gs-digg-event-popup" noautofocus="true"
+    <panel id="gs-digg-event-popup" noautofocus="true" noautohide="true"
       onmouseover="gsDiggEventViewer.stopAutoHide()"
       onmouseout="gsDiggEventViewer.startAutoHide()">
       <gsdiggeventbox id="gs-digg-event-popup-box" flex="1" />

@@ -38,7 +38,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   height: 140px;
   width: 520px;
   overflow: hidden;
-  border: 1px solid #EEE;
-  background: transparent;
+  border: thin solid #EEE;
   -moz-appearance: none !important;
 }
