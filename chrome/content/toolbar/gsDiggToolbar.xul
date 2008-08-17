@@ -125,6 +125,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <toolbox id="navigator-toolbox">
     <toolbar id="gs-digg-toolbar" toolbarname="&gs.digg.toolbar.name;"
       mode="icons" class="chromeclass-toolbar" customizable="true"
+      defaulticonsize="small" context="toolbar-context-menu"
       collapsed="false" persist="collapsed,currentset"
       defaultset="gs-digg-toolbar-options-button,separator,gs-digg-toolbar-submit-button,gs-digg-toolbar-diggs-item,gs-digg-toolbar-separator-existingStory,gs-digg-toolbar-comments-item,spring,gs-digg-toolbar-snooze-button" >
     </toolbar>
