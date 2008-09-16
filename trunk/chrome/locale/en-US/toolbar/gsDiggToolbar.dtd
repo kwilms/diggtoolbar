@@ -44,5 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <!ENTITY gs.digg.toolbar.submit.tooltip  "Submit this story">
 <!ENTITY gs.digg.toolbar.diggit.tooltip  "Digg this story">
 
-<!ENTITY gs.digg.toolbar.diggs.defaultText     "diggs">
-<!ENTITY gs.digg.toolbar.comments.defaultText  "comments">
+<!ENTITY gs.digg.toolbar.options.title   "Digg toolbar options">
+<!ENTITY gs.digg.toolbar.diggs.title     "Submit or Digg a story">
+<!ENTITY gs.digg.toolbar.comments.title  "Digg story comments">
+<!ENTITY gs.digg.toolbar.snooze.title    "Snooze Digg notifications">

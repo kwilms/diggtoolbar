@@ -1,5 +1,8 @@
 /**
- * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ * Copyright © 2007-2008 Glaxstar Ltd. All rights reserved.
+ * Note that Glaxstar is in the process of reviewing the Glubble code base and
+ * will decide on a per file basis what will have an Open Source license
+ * applied to it. Pending this decision the copyright notice prevails.
  */
 
 const Cc = Components.classes;
@@ -56,7 +59,7 @@ gsSQLiteService.prototype = {
     this._logService.trace("gsSQLiteService._init");
 
     this._utilityService =
-      Cc["@glaxstar.org/common/utility-service;1"].
+      Cc["@glaxstar.org/common/utility-service;2"].
         getService(Ci.gsIUtilityService);
     this._storageService =
       Cc["@mozilla.org/storage/service;1"].

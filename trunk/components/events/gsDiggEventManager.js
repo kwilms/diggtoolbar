@@ -106,7 +106,7 @@ var gsDiggEventManager = {
     this._apiService =
       Cc["@glaxstar.org/digg/api-service;1"].getService(Ci.gsIDiggAPIService);
     this._utilityService =
-      Cc["@glaxstar.org/common/utility-service;1"].
+      Cc["@glaxstar.org/common/utility-service;2"].
         getService(Ci.gsIUtilityService);
     this._prefService =
       Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch);

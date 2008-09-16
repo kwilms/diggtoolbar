@@ -70,7 +70,7 @@ var gsDiggSQLiteService = {
     this._logService.debug("gsDiggSQLiteService.init");
 
     this._utilityService =
-      Cc["@glaxstar.org/common/utility-service;1"].
+      Cc["@glaxstar.org/common/utility-service;2"].
         getService(Ci.gsIUtilityService);
     this._dbService =
       Cc["@glaxstar.org/common/sqlite-service;2"].

@@ -1,0 +1,67 @@
+/**
+ * Copyright © 2008 Glaxstar Ltd. All rights reserved.
+ */
+
+#include "nsISupports.idl"
+
+/**
+ * Cookie manager. Handles common cookie related operations.
+ */
+[scriptable, uuid(55c7d5c0-63f5-11dd-ad8b-0800200c9a66)]
+interface gsICookieManager : nsISupports
+{
+  /**
+   * Returns the maximum expiration date possible for Mac, Linux and Windows.
+   * @return The GMT string representation of the maximum expiration date.
+   */
+  readonly attribute AUTF8String maxExpirationDate;
+
+  /**
+   * Sets a cookie for the desired domain with the desired name, value and
+   * attributes
+   * @param aCookieDomain the domain the cookie belongs to
+   * @param aCookieName cookie name
+   * @param aCookieValue cookie value
+   * @param aCookieAttributes cookie attributes(expires,domain,path,secure)
+   */
+  void setCookie(
+    in AUTF8String aCookieDomain, in AUTF8String aCookieName,
+    in AUTF8String aCookieValue, in AUTF8String aCookieAttributes);
+
+  /**
+   * Returns the value of the cookie specified by its name and domain.
+   * @param aCookieDomain The domain the cookie belongs to
+   * @param aCookieName The cookie name.
+   * @return The cookie value.
+   */
+  AUTF8String getCookie(
+    in AUTF8String aCookieDomain, in AUTF8String aCookieName);
+
+  /**
+   * Removes the cookie specified by its domain and name by setting an empty
+   * string.
+   * @param aCookieDomain The domain the cookie belongs to
+   * @param aCookieName The cookie name
+   */
+  void removeCookie(in AUTF8String aCookieDomain, in AUTF8String aCookieName);
+
+  /**
+   * Checks if a cookie exists
+   * @param aCookieDomain The domain the cookie belongs to.
+   * @param aCookieName The cookie name.
+   * @return True if it exists, false otherwise.
+   */
+  boolean cookieExists(in AUTF8String aCookieDomain,in AUTF8String aCookieName);
+
+  /**
+   * Generates a string with the cookie attributes so it can be passed to the
+   * setCookie method.
+   * @param aExpires Date in GMT string. Null if not needed.
+   * @param aDomain Cookie domain. Start with a '.'.Null if not needed.
+   * @param aPath Path of the cookie. Null if not needed
+   * @param aSecure true or false.
+   */
+  AUTF8String generateCookieAttributeString(
+    in AUTF8String aExpires, in AUTF8String aDomain, in AUTF8String aPath,
+    in boolean aSecure);
+};

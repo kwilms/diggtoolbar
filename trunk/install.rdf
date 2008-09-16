@@ -38,7 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <Description about="urn:mozilla:install-manifest">
     <em:id>{671c8440-f787-11dc-95ff-0800200c9a66}</em:id>
     <em:name>Digg Toolbar for Firefox</em:name>
-    <em:version>1.0.1</em:version>
+    <em:version>1.0.2</em:version>
     <em:description>See what’s being discovered and shared on Digg</em:description>
     <em:creator>Glaxstar Limited</em:creator>
     <em:homepageURL>http://www.digg.com/</em:homepageURL>

@@ -1,5 +1,5 @@
 /**
- * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ * Copyright © 2007-2008 Glaxstar Ltd. All rights reserved.
  */
 
 const Cc = Components.classes;
@@ -11,7 +11,7 @@ const CLASS_NAME = "Communication service";
 const CONTRACT_ID = "@glaxstar.org/common/communication-service;1";
 
 // URL validation Regular Expression.
-const GS_DAU_RE_URL =
+const GS_COM_RE_URL =
   new RegExp(
     "(?:(?:(?:http|https|ftp|file)://)(?:w{3}\\.)?(?:[a-zA-Z0-9/;\\?&=:\\-_\\" +
     "$\\+!\\*'\(\\|\\\\~\\[\\]#%\\.])+)");
@@ -38,7 +38,7 @@ var CommunicationService = {
     this._logService.trace("CommunicationService._init");
 
     this._utilityService =
-      Cc["@glaxstar.org/common/utility-service;1"].
+      Cc["@glaxstar.org/common/utility-service;2"].
         getService(Ci.gsIUtilityService);
   },
 
@@ -163,6 +163,7 @@ var CommunicationService = {
       Cc["@glaxstar.org/common/cm-transfer-object;1"].
         createInstance(Ci.gsICMTransferObject);
     var request = aEvent.target;
+
     tranObject.fromJSON(request.responseText, aDomain);
 
     return tranObject;
@@ -455,7 +456,7 @@ var HTTPRequestSender = {
     this._logService.debug(
       "HTTPRequestSender.sendRequest. URL: " + aURL + ", method: " + aMethod);
 
-    if ((null == aURL) || !GS_DAU_RE_URL.test(aURL)) {
+    if ((null == aURL) || !GS_COM_RE_URL.test(aURL)) {
       this._logService.error(
         "HTTPRequestSender.sendRequest: Invalid URL: " + aURL);
 

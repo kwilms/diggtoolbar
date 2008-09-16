@@ -45,7 +45,7 @@ CMTransferObject.prototype = {
     this._logService.trace("CMTransferObject._init");
 
     this._utilityService =
-      Cc["@glaxstar.org/common/utility-service;1"].
+      Cc["@glaxstar.org/common/utility-service;2"].
         getService(Ci.gsIUtilityService);
     this._compressionService =
       Cc["@glaxstar.org/common/compression-service;1"].

@@ -53,7 +53,7 @@ var gsDiggNotificationsPane = {
       Cc["@glaxstar.org/digg/main-service;1"].
         getService(Ci.gsIDiggMainService);
     this._utilityService =
-      Cc["@glaxstar.org/common/utility-service;1"].
+      Cc["@glaxstar.org/common/utility-service;2"].
         getService(Ci.gsIUtilityService);
 
     this._loadTree();

@@ -1,5 +1,5 @@
 /**
- * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ * Copyright © 2007-2008 Glaxstar Ltd. All rights reserved.
  */
 
 #include "nsISupports.idl"
@@ -25,84 +25,6 @@ interface gsICommonAPI : nsISupports
    * before it's sent.
    */
   void ping(
-    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
-    in gsICMErrorHandler aErrorHandler);
-
-  /**
-   * Obtains a CAPTCHA image from the server.
-   * @param aSendData the data to send to the server. Should be null if no data
-   * needs to be sent.
-   * @param aLoadHandler the load handler for the API call.
-   * @param aErrorHandler the error handler for the API call.
-   * @throws Exception if any of the arguments is invalid, or the call fails
-   * before it's sent.
-   */
-  void getCaptcha(
-    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
-    in gsICMErrorHandler aErrorHandler);
-
-  /**
-   * Creates a new account.
-   * @param aSendData the data to send to the server. Should be null if no data
-   * needs to be sent.
-   * @param aLoadHandler the load handler for the API call.
-   * @param aErrorHandler the error handler for the API call.
-   * @throws Exception if any of the arguments is invalid, or the call fails
-   * before it's sent.
-   */
-  void createAccount(
-    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
-    in gsICMErrorHandler aErrorHandler);
-
-  /**
-   * Confirms a newly created account.
-   * @param aSendData the data to send to the server. Should be null if no data
-   * needs to be sent.
-   * @param aLoadHandler the load handler for the API call.
-   * @param aErrorHandler the error handler for the API call.
-   * @throws Exception if any of the arguments is invalid, or the call fails
-   * before it's sent.
-   */
-  void confirmAccount(
-    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
-    in gsICMErrorHandler aErrorHandler);
-
-  /**
-   * Associates an account with a realm.
-   * @param aSendData the data to send to the server. Should be null if no data
-   * needs to be sent.
-   * @param aLoadHandler the load handler for the API call.
-   * @param aErrorHandler the error handler for the API call.
-   * @throws Exception if any of the arguments is invalid, or the call fails
-   * before it's sent.
-   */
-  void joinRealm(
-    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
-    in gsICMErrorHandler aErrorHandler);
-
-  /**
-   * Obtains detailed information on an account.
-   * @param aSendData the data to send to the server. Should be null if no data
-   * needs to be sent.
-   * @param aLoadHandler the load handler for the API call.
-   * @param aErrorHandler the error handler for the API call.
-   * @throws Exception if any of the arguments is invalid, or the call fails
-   * before it's sent.
-   */
-  void getAccount(
-    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
-    in gsICMErrorHandler aErrorHandler);
-
-  /**
-   * Updates account information on the server.
-   * @param aSendData the data to send to the server. Should be null if no data
-   * needs to be sent.
-   * @param aLoadHandler the load handler for the API call.
-   * @param aErrorHandler the error handler for the API call.
-   * @throws Exception if any of the arguments is invalid, or the call fails
-   * before it's sent.
-   */
-  void updateAccount(
     in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
     in gsICMErrorHandler aErrorHandler);
 
@@ -140,48 +62,30 @@ interface gsICommonAPI : nsISupports
     in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
     in gsICMErrorHandler aErrorHandler);
 
-  // Message methods.
+  // Captcha methods
   /**
-   * Can be called to retrieve the list messages
-   * @param aSendData the data to send to the server.
-   * API parameters
-   *  credentials[session] Required
+   * Obtains a CAPTCHA image from the server.
+   * @param aSendData the data to send to the server. Should be null if no data
+   * needs to be sent.
    * @param aLoadHandler the load handler for the API call.
    * @param aErrorHandler the error handler for the API call.
    * @throws Exception if any of the arguments is invalid, or the call fails
    * before it's sent.
    */
-  void listMessages(
+  void getCaptcha(
     in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
     in gsICMErrorHandler aErrorHandler);
 
+  // Service methods
   /**
-   * Removes(Ignores) a message from the user's message queue.
+   * Sends the version to the server.
    * @param aSendData the data to send to the server.
-   * API parameters
-   *  credentials[session] Required. The session of the user.
-   *  message[msg_uuid] Required. The id of the message.
    * @param aLoadHandler the load handler for the API call.
    * @param aErrorHandler the error handler for the API call.
    * @throws Exception if any of the arguments is invalid, or the call fails
    * before it's sent.
    */
-  void ignoreMessage(
-    in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
-    in gsICMErrorHandler aErrorHandler);
-
-  /**
-   * Removes(Closes) a message from the user's message queue.
-   * @param aSendData the data to send to the server.
-   * API parameters
-   *  credentials[session] Required. The session of the user.
-   *  message[msg_uuid] Required. The id of the message.
-   * @param aLoadHandler the load handler for the API call.
-   * @param aErrorHandler the error handler for the API call.
-   * @throws Exception if any of the arguments is invalid, or the call fails
-   * before it's sent.
-   */
-  void closeMessage(
+  void version(
     in gsICMTransferObject aSendData, in gsICMLoadHandler aLoadHandler,
     in gsICMErrorHandler aErrorHandler);
 };
