@@ -55,7 +55,7 @@ var LoggingService = {
         getService(Ci.nsIObserverService);
 
     this._utilityService =
-      Cc["@glaxstar.org/common/utility-service;1"].
+      Cc["@glaxstar.org/common/utility-service;2"].
         getService(Ci.gsIUtilityService);
     this._firefoxPreferenceService =
       Cc["@mozilla.org/preferences-service;1"].
@@ -146,9 +146,6 @@ var LoggingService = {
       var timestamp = (new Date()).toUTCString();
       var logEntry;
 
-      // TODO: perhaps we should use RegExp replacing instead of string
-      // concatenation. We would have to do some performance testing for this.
-      // generate the entry string.
       logEntry = "[" + timestamp + "]" + " " + levelString + " " + aMessage;
 
       // write it to the log.

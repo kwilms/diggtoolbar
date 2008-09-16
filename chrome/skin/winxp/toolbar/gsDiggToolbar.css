@@ -42,6 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   -moz-box-align: center;
   padding-left: 1px;
   padding-right: 1px;
+  -moz-box-orient: horizontal;
 }
 
 #gs-digg-toolbar-options-button {
@@ -49,7 +50,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   margin-left: 4px;
 }
 
-#gs-digg-toolbar-submit-button > image {
+#gs-digg-toolbar-submit-button {
   list-style-image: url("chrome://digg/skin/toolbar/button-submit.png");
 }
 

@@ -138,7 +138,7 @@ var gsDiggMain = {
       this._startupService.setSetupWizardShown();
 
       let utilityService =
-        Cc["@glaxstar.org/common/utility-service;1"].
+        Cc["@glaxstar.org/common/utility-service;2"].
           getService(Ci.gsIUtilityService);
 
       if (Ci.gsIUtilityService.OS_MAC == utilityService.getOperatingSystem()) {

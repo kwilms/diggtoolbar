@@ -43,7 +43,7 @@ const FIXED_API_PARAM_TYPE_VALUE = "json";
 // The name of the appkey fixed parameter.
 const FIXED_API_PARAM_APPKEY_NAME = "appkey";
 // The value of the appkey fixed parameter.
-const FIXED_API_PARAM_APPKEY_VALUE = "http://digg.com/tools/firefox?v=1.0";
+const FIXED_API_PARAM_APPKEY_VALUE = "http://digg.com/tools/firefox?v=1.0.2";
 
 // The Digg API manifest
 const MANIFEST = '{'

@@ -1,5 +1,5 @@
 /**
- * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ * Copyright © 2007-2008 Glaxstar Ltd. All rights reserved.
  */
 
 const Cc = Components.classes;
@@ -36,7 +36,7 @@ var CompressionService = {
     this._logService.trace("CompressionService._init");
 
     this._utilityService =
-      Cc["@glaxstar.org/common/utility-service;1"].
+      Cc["@glaxstar.org/common/utility-service;2"].
         getService(Ci.gsIUtilityService);
     this._encoder = new Base64Encoder();
   },

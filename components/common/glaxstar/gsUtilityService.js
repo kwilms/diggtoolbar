@@ -1,14 +1,14 @@
 /**
- * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ * Copyright © 2007-2008 Glaxstar Ltd. All rights reserved.
  */
 
 const Cc = Components.classes;
 const Ci = Components.interfaces;
 const Ce = Components.Exception;
 const Cr = Components.results;
-const CLASS_ID = Components.ID("{A2D24925-0CDB-462D-9AB6-9CEE3A6D5346}");
+const CLASS_ID = Components.ID("{6025CBF0-AC03-45EF-8448-9A4B8B6C9353}");
 const CLASS_NAME = "Utility Service";
-const CONTRACT_ID = "@glaxstar.org/common/utility-service;1";
+const CONTRACT_ID = "@glaxstar.org/common/utility-service;2";
 
 // Constructor for the mutable array object
 const NSArray =

@@ -1,5 +1,5 @@
 /**
- * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ * Copyright © 2007-2008 Glaxstar Ltd. All rights reserved.
  */
 
 #include "nsISupports.idl"
@@ -12,7 +12,7 @@ interface nsIDOMNode;
  * Utility service. Contains some general utility methods that are commonly
  * used in our extensions.
  */
-[scriptable, uuid(0887D15C-0D00-48B4-B55B-7A6CF7120F9E)]
+[scriptable, uuid(6141DFF5-47DF-47F1-9476-AE8A3FAF0471)]
 interface gsIUtilityService : nsISupports
 {
   // Windows operating system identifier, except Windows Vista.

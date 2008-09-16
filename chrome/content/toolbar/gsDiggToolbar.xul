@@ -48,24 +48,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <script type="application/x-javascript"
     src="chrome://digg/content/toolbar/gsDiggToolbar.js" />
 
-  <stringbundleset id="stringbundleset">
-    <stringbundle id="gs-digg-toolbar-string-bundle"
-      src="chrome://digg/locale/toolbar/gsDiggToolbar.properties" />
-  </stringbundleset>
-
-  <broadcasterset>
-    <broadcaster id="gs-digg-toolbar-broadcaster-newStory"/>
-    <broadcaster id="gs-digg-toolbar-broadcaster-existingStory"/>
-    <broadcaster id="gs-digg-toolbar-broadcaster-diggs" />
-    <broadcaster id="gs-digg-toolbar-broadcaster-comments" />
-  </broadcasterset>
-
   <toolbarpalette id="BrowserToolbarPalette">
-
     <toolbarbutton type="menu-button"
       id="gs-digg-toolbar-options-button"
-      class="gs-digg-toolbar-element"
       label="&gs.digg.toolbar.options.label;"
+      title="&gs.digg.toolbar.options.title;"
+      class="chromeclass-toolbar-additional toolbarbutton-1 gs-digg-toolbar-element"
       tooltiptext="&gs.digg.toolbar.options.tooltip;"
       oncommand="if (event.target == this) { gsDiggMain.openURL('http://www.digg.com', GS_DIGG_TRACKING_CODE_HOME); }">
 
@@ -81,54 +69,62 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       </menupopup>
     </toolbarbutton>
 
-    <toolbaritem id="gs-digg-toolbar-submit-button"
-      class="gs-digg-toolbar-element"
-      tooltiptext="&gs.digg.toolbar.submit.tooltip;"
-      observes="gs-digg-toolbar-broadcaster-newStory"
-      onclick="gsDiggToolbar.submitStory(GS_DIGG_TRACKING_CODE_TOOLBAR_SUBMIT)">
-      <image/>
-    </toolbaritem>
-
     <toolbaritem id="gs-digg-toolbar-diggs-item"
-      class="gs-digg-toolbar-element"
-      observes="gs-digg-toolbar-broadcaster-existingStory">
-      <label id="gs-digg-toolbar-diggs-count"
-        observes="gs-digg-toolbar-broadcaster-diggs"
-        value="&gs.digg.toolbar.diggs.defaultText;"
-        onclick="gsDiggToolbar.openStory(GS_DIGG_TRACKING_CODE_TOOLBAR_DIGGS)"/>
-      <image id="gs-digg-toolbar-diggs-button"
-        tooltiptext="&gs.digg.toolbar.diggit.tooltip;"
-        onclick="gsDiggToolbar.openStory(GS_DIGG_TRACKING_CODE_TOOLBAR_DIGGIT)"/>
+      title="&gs.digg.toolbar.diggs.title;"
+      class="chromeclass-toolbar-additional toolbarbutton-1 gs-digg-toolbar-element">
+      <image id="gs-digg-toolbar-submit-button"
+        tooltiptext="&gs.digg.toolbar.submit.tooltip;"
+        observes="gs-digg-toolbar-broadcaster-newStory"
+        onclick="gsDiggToolbar.submitStory(GS_DIGG_TRACKING_CODE_TOOLBAR_SUBMIT)"/>
+      <hbox observes="gs-digg-toolbar-broadcaster-existingStory" align="center">
+        <label id="gs-digg-toolbar-diggs-count"
+          observes="gs-digg-toolbar-broadcaster-diggs"
+          onclick="gsDiggToolbar.openStory(GS_DIGG_TRACKING_CODE_TOOLBAR_DIGGS)"/>
+        <image id="gs-digg-toolbar-diggs-button"
+          tooltiptext="&gs.digg.toolbar.diggit.tooltip;"
+          onclick="gsDiggToolbar.openStory(GS_DIGG_TRACKING_CODE_TOOLBAR_DIGGIT)"/>
+      </hbox>
     </toolbaritem>
-
-    <toolbarseparator id="gs-digg-toolbar-separator-existingStory"
-      observes="gs-digg-toolbar-broadcaster-existingStory"/>
 
     <toolbaritem id="gs-digg-toolbar-comments-item"
-      class="gs-digg-toolbar-element"
+      title="&gs.digg.toolbar.comments.title;"
+      class="chromeclass-toolbar-additional toolbarbutton-1 gs-digg-toolbar-element"
       observes="gs-digg-toolbar-broadcaster-existingStory"
       onclick="gsDiggToolbar.openStory(GS_DIGG_TRACKING_CODE_TOOLBAR_COMMENTS)">
       <image id="gs-digg-toolbar-comments-image"/>
       <label id="gs-digg-toolbar-comments-count"
-        observes="gs-digg-toolbar-broadcaster-comments"
-        value="&gs.digg.toolbar.comments.defaultText;"/>
+        observes="gs-digg-toolbar-broadcaster-comments" />
     </toolbaritem>
 
     <toolbarbutton type="checkbox" persist="checked"
       id="gs-digg-toolbar-snooze-button"
-      class="gs-digg-toolbar-element"
+      title="&gs.digg.toolbar.snooze.title;"
+      class="chromeclass-toolbar-additional toolbarbutton-1 gs-digg-toolbar-element"
       observes="gs-digg-snooze-broadcaster"
       oncommand="gsDiggMain.toggleSnooze()"/>
-
   </toolbarpalette>
 
-  <toolbox id="navigator-toolbox">
-    <toolbar id="gs-digg-toolbar" toolbarname="&gs.digg.toolbar.name;"
-      mode="icons" class="chromeclass-toolbar" customizable="true"
-      defaulticonsize="small" context="toolbar-context-menu"
-      collapsed="false" persist="collapsed,currentset"
-      defaultset="gs-digg-toolbar-options-button,separator,gs-digg-toolbar-submit-button,gs-digg-toolbar-diggs-item,gs-digg-toolbar-separator-existingStory,gs-digg-toolbar-comments-item,spring,gs-digg-toolbar-snooze-button" >
-    </toolbar>
-  </toolbox>
+  <window id="main-window">
+
+    <stringbundleset id="stringbundleset">
+      <stringbundle id="gs-digg-toolbar-string-bundle"
+        src="chrome://digg/locale/toolbar/gsDiggToolbar.properties" />
+    </stringbundleset>
+
+    <broadcasterset id="gs-digg-toolbar-broadcasterset">
+      <broadcaster id="gs-digg-toolbar-broadcaster-newStory"/>
+      <broadcaster id="gs-digg-toolbar-broadcaster-existingStory"/>
+      <broadcaster id="gs-digg-toolbar-broadcaster-diggs" />
+      <broadcaster id="gs-digg-toolbar-broadcaster-comments" />
+    </broadcasterset>
+
+    <toolbox id="navigator-toolbox">
+      <toolbar id="gs-digg-toolbar" toolbarname="&gs.digg.toolbar.name;"
+        customizable="true" mode="icons" defaulticonsize="small"
+        context="toolbar-context-menu" collapsed="false" persist="collapsed"
+        defaultset="gs-digg-toolbar-options-button,separator,gs-digg-toolbar-diggs-item,separator,gs-digg-toolbar-comments-item,spring,gs-digg-toolbar-snooze-button"/>
+    </toolbox>
+
+  </window>
 
 </overlay>

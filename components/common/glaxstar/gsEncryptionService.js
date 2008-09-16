@@ -1,5 +1,5 @@
 /**
- * Copyright © 2007 Glaxstar Ltd. All rights reserved.
+ * Copyright © 2007-2008 Glaxstar Ltd. All rights reserved.
  * This copyright applies to all the code inside this file, except where
  * explicitly defined.
  */
