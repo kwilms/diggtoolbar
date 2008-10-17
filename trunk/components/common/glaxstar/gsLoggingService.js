@@ -35,8 +35,6 @@ const GS_LOG_FILE_PLAIN_EXTENSION = "txt";
  * Logs messages of various levels, through different output methods.
  */
 var LoggingService = {
-  /* Utility service. */
-  _utilityService : null,
   /* Preferences service. */
   _firefoxPreferenceService : null,
   /* Current log level. */
@@ -54,9 +52,6 @@ var LoggingService = {
       Cc["@mozilla.org/observer-service;1"].
         getService(Ci.nsIObserverService);
 
-    this._utilityService =
-      Cc["@glaxstar.org/common/utility-service;2"].
-        getService(Ci.gsIUtilityService);
     this._firefoxPreferenceService =
       Cc["@mozilla.org/preferences-service;1"].
         getService(Ci.nsIPrefBranch2);
@@ -232,8 +227,11 @@ var LoggingService = {
    * @return a nsIFile object.
    */
   _getFileReference : function(aFileName) {
-    var file = this._utilityService.getExtensionFolder(null);
+    var utilityService =
+      Cc["@glaxstar.org/common/utility-service;2"].
+        getService(Ci.gsIUtilityService);
 
+    var file = utilityService.getExtensionFolder(null);
     file.append(aFileName);
 
     return file;
